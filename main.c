@@ -8,12 +8,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/stat.h> 
+#include <sys/stat.h>
 
 #include "hello_world_cl.h"
 
-
-int main() {
+int main()
+{
 
     cl_context context = NULL;
     cl_command_queue command_queue = NULL;
@@ -22,7 +22,7 @@ int main() {
     cl_int ret;
 
     // === Get number of platforms & devices ===
-    cl_uint myplatform_index  = 0 ;
+    cl_uint myplatform_index = 0;
     cl_uint num_platforms;
 
     ret = clGetPlatformIDs(0, NULL, &num_platforms);
@@ -74,20 +74,21 @@ int main() {
             fprintf(stdout, "    GPU Device %u: %s\n", j, dname);
         }
 
-        if (strcmp( pname, "NVIDIA CUDA") == 0) {
-        if ( num_devices > 0 ) {
-            myplatform_index = i;
-        }}
+        if (strcmp(pname, "NVIDIA CUDA") == 0) {
+            if (num_devices > 0) {
+                myplatform_index = i;
+            }
+        }
     }
 
-    cl_device_id device_id = NULL ;
-    ret = clGetDeviceIDs(platforms[ myplatform_index ], CL_DEVICE_TYPE_GPU, 1, &device_id, NULL);
+    cl_device_id device_id = NULL;
+    ret = clGetDeviceIDs(platforms[myplatform_index], CL_DEVICE_TYPE_GPU, 1, &device_id, NULL);
     if (ret != CL_SUCCESS) {
         fprintf(stderr, "Error getting device IDs: %d\n", ret);
         exit(1);
-    }else{
+    } else {
         char dname[128];
-        ret = clGetDeviceInfo( device_id , CL_DEVICE_NAME, sizeof(dname), dname, NULL);
+        ret = clGetDeviceInfo(device_id, CL_DEVICE_NAME, sizeof(dname), dname, NULL);
         if (ret != CL_SUCCESS) {
             fprintf(stderr, "Error getting device info: %d\n", ret);
             exit(1);
@@ -97,39 +98,38 @@ int main() {
 
     // === end of getting number of platforms & devices ===
 
-
     context = clCreateContext(NULL, 1, &device_id, NULL, NULL, &ret);
     if (ret != CL_SUCCESS) {
         fprintf(stderr, "Error creating context: %d\n", ret);
         exit(1);
     }
 
-    #if defined(CL_VERSION_2_0)
-        // OpenCL 2.0+ headers, preferred
-        const cl_queue_properties props[] = {0};
-        command_queue = clCreateCommandQueueWithProperties(context, device_id, props, &ret);
-    #else
-        // OpenCL 1.2
-        command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
-    #endif
+#if defined(CL_VERSION_2_0)
+    // OpenCL 2.0+ headers, preferred
+    const cl_queue_properties props[] = { 0 };
+    command_queue = clCreateCommandQueueWithProperties(context, device_id, props, &ret);
+#else
+    // OpenCL 1.2
+    command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
+#endif
     if (ret != CL_SUCCESS) {
         fprintf(stderr, "Failed to create command queue: %d\n", ret);
         exit(1);
     }
 
-const char *source = (const char *)hello_world_cl;
-size_t length = hello_world_cl_len;
+    const char* source = (const char*)hello_world;
+    size_t length = hello_world_len;
 
-program = clCreateProgramWithSource(context, 1, &source, &length, &ret);
-if (ret != CL_SUCCESS) {
-    printf("Error creating program: %d\n", ret);
-}
+    program = clCreateProgramWithSource(context, 1, &source, &length, &ret);
+    if (ret != CL_SUCCESS) {
+        printf("Error creating program: %d\n", ret);
+    }
 
     ret = clBuildProgram(program, 1, &device_id, NULL, NULL, NULL);
     if (ret != CL_SUCCESS) {
         size_t log_size;
         clGetProgramBuildInfo(program, device_id, CL_PROGRAM_BUILD_LOG, 0, NULL, &log_size);
-        char *log = (char *) malloc(log_size);
+        char* log = (char*)malloc(log_size);
         clGetProgramBuildInfo(program, device_id, CL_PROGRAM_BUILD_LOG, log_size, log, NULL);
         fprintf(stderr, "%s\n", log);
         free(log);
@@ -141,7 +141,7 @@ if (ret != CL_SUCCESS) {
         fprintf(stderr, "Error creating kernel: %d\n", ret);
         exit(1);
     }
-    
+
     size_t global_item_size = 1;
     size_t local_item_size = 1;
     ret = clEnqueueNDRangeKernel(command_queue, kernel, 1, NULL, &global_item_size, &local_item_size, 0, NULL, NULL);
@@ -158,7 +158,5 @@ if (ret != CL_SUCCESS) {
     ret = clReleaseCommandQueue(command_queue);
     ret = clReleaseContext(context);
 
-
-    return EXIT_SUCCESS ;
+    return EXIT_SUCCESS;
 }
-
