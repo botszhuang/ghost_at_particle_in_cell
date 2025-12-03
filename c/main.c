@@ -5,7 +5,6 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#include "hello_world_cl.h"
 
 
 int main()
@@ -17,6 +16,7 @@ int main()
     get_platform_number_and_ids ( g ) ;                                
     get_device_ids( g ) ;
     get_context_and_queue ( g ) ;
+    get_program ( g ) ;
 
 
     if (g->device_Ids)  { free(g->device_Ids);}
