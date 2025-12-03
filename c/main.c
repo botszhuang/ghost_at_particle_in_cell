@@ -1,9 +1,7 @@
 // main.c
 // xxd -i hello_world.cl > hello_world_cl.h
 // gcc hello_world.c -o hello_opencl.exe -lOpenCL
-
-#define CL_TARGET_OPENCL_VERSION 300
-#include <CL/cl.h>
+#include <cl_version.h>
 
 #include <stdio.h>
 #include <stdlib.h>
