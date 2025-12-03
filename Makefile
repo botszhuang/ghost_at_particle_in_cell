@@ -35,7 +35,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c |$(OBJ_DIR)
 
 # Embed kernels: .cl -> _cl.h
 $(cl_h_DIR)/%_cl.h: $(cl_DIR)/%.cl | $(cl_h_DIR)
-	xxd -i $< > $@
+	xxd -i -n $* $< > $@
 
 $(OBJ_DIR):
 	mkdir -p $@
