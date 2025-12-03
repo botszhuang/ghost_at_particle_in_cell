@@ -3,7 +3,13 @@
 
 #include <cl_version.h>
 
-typedef{
+typedef struct{
+    unsigned int platform_id_num ;
+    cl_platform_id * platform_Ids ;                                
+
+    unsigned int device_number ;
+    cl_device_id * device_Ids ;
+
     cl_context context ;
     cl_command_queue command_queue ;
     cl_program program ;
