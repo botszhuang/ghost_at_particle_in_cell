@@ -18,9 +18,11 @@ int main()
     get_context_and_queue ( g ) ;
     get_program ( g ) ;
 
-
-    if (g->device_Ids)  { free(g->device_Ids);}
-    if (g->platform_Ids){ free(g->platform_Ids);}
+    if ( g->program       ){ ret = clReleaseProgram(g->program);           }
+    if ( g->command_queue ){ ret = clReleaseCommandQueue(g->command_queue);}
+    if ( g->context       ){ ret = clReleaseContext(g->context);           }
+    if ( g->device_Ids    ){ free(g->device_Ids);}
+    if ( g->platform_Ids  ){ free(g->platform_Ids);}
     free ( g ) ;
 
     return EXIT_SUCCESS;
