@@ -13,4 +13,6 @@ void get_platform_info(  const cl_platform_id id ) ;
 cl_device_id * get_devices_info(  unsigned int * divce_numPtr , cl_platform_id platforms  ) ;
 void get_device_ids( cl_gpu_profile_struct * g ) ;
 
+void get_context_and_queue ( cl_gpu_profile_struct * a ) ;
+
 #endif

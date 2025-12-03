@@ -54,9 +54,13 @@ cl_device_id * get_devices_info(  unsigned int * divce_numPtr , cl_platform_id p
 
 void get_device_ids( cl_gpu_profile_struct * g ){
     
-    for (  unsigned int i = 0 ; i < g->platform_id_num ; i++ ){
-        get_platform_info( ( const cl_platform_id ) ( g->platform_Ids [i])  ) ;
-        g->device_Ids = get_devices_info(  &g->device_number , g->platform_Ids [ i ]  ) ;
-    }    
+    unsigned int i = 0 ;
+    //for (  unsigned int i = 0 ; i < g->platform_id_num ; i++ ){
+    get_platform_info( ( const cl_platform_id ) ( g->platform_Ids [i])  ) ;
+    //}    
+    
+    g->device_number = 1 ;
+    g->device_Ids = get_devices_info(  &g->device_number , g->platform_Ids [ i ]  ) ;
+
 }
 #endif

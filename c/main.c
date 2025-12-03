@@ -16,10 +16,11 @@ int main()
     cl_gpu_profile_struct * g = calloc ( 1 , sizeof ( cl_gpu_profile_struct ) )  ;   
     get_platform_number_and_ids ( g ) ;                                
     get_device_ids( g ) ;
+    get_context_and_queue ( g ) ;
 
 
-    free ( g->device_Ids ) ;
-    free ( g->platform_Ids ) ;
+    if (g->device_Ids)  { free(g->device_Ids);}
+    if (g->platform_Ids){ free(g->platform_Ids);}
     free ( g ) ;
 
     return EXIT_SUCCESS;
