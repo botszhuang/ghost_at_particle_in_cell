@@ -21,6 +21,8 @@ void get_program ( cl_gpu_profile_struct * a ){
     
 }
 void free_program ( cl_gpu_profile_struct *a ){ 
-    CL_CHECK (clReleaseProgram(a->program)); 
+    if ( a->program ){ 
+        CL_CHECK (clReleaseProgram(a->program));
+    } 
 }
 #endif

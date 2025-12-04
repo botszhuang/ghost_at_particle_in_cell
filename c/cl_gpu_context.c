@@ -31,8 +31,13 @@ void get_context_and_queue( cl_gpu_profile_struct * a ){
 }
 
 void free_context ( cl_gpu_profile_struct * g ) { 
-    CL_CHECK ( clReleaseContext(g->context) );
+    if( g->command_queue ){
+        CL_CHECK ( clReleaseContext(g->context) ) ; 
+    }
 }
 void free_queue ( cl_gpu_profile_struct * g ) { 
-    CL_CHECK ( clReleaseCommandQueue(g->command_queue) ) ; }
+    if( g->command_queue ) {
+        CL_CHECK ( clReleaseCommandQueue(g->command_queue) ) ;
+    } 
+}
 #endif
