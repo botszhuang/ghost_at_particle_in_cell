@@ -1,5 +1,5 @@
-#ifndef C_INIT_TEST_PARTICLE_C
-#define C_INIT_TEST_PARTICLE_C
+#ifndef C_TEST_PARTICLE_MEM_C
+#define C_TEST_PARTICLE_MEM_C
 #include <c_tool.h>
 #include <c_type.h>
 

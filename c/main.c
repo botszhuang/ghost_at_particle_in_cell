@@ -21,8 +21,11 @@ int main(){
     
     test_particle_profile_struct * p ;
     
-    init_test_particle_mem ( & p ) ;
-    free_test_particle_mem (   p ) ;
+    init_test_particle_mem  ( & p ) ;
+    init_test_particle_status ( p ) ;
+    print_test_particle       ( p ) ;
+
+    free_test_particle_mem ( p ) ;
 
     // Clean up
     flush_and_finish_queue ( g ) ;
