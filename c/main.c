@@ -14,18 +14,23 @@ int main(){
     get_platform_number_and_ids ( g ) ;                                
     get_device_ids( g ) ;
     get_context_and_queue ( g ) ;
+
+
+
     get_program ( g ) ;
     get_kernel  ( g ) ;
 
     run_hello_world ( g ) ;
     
     test_particle_profile_struct * p ;
-    
+
     init_test_particle_mem  ( & p ) ;
     init_test_particle_status ( p ) ;
     print_test_particle       ( p ) ;
 
     cl_init_test_particle_mem ( p , g );
+  
+
     
     // write data to GPU
     pX_all_from_host_to_gpu ( p , g ) ;

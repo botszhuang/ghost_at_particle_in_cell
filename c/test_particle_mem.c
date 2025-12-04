@@ -1,6 +1,7 @@
 #ifndef TEST_PARTICLE_MEM_C
 #define TEST_PARTICLE_MEM_C
 #include <c_tool.h>
+#include <cl_erro_code.h>
 #include <test_particle_type.h>
 #include <cl_gpu_profile_struct.h>
 
@@ -37,13 +38,13 @@ void cl_init_test_particle_mem ( test_particle_profile_struct * p , cl_gpu_profi
                     g->context,\
                     CL_MEM_READ_WRITE,\
                     p->cl_##name##_total_bytes ,\
-                    ( void* ) p->name  ,\
+                    NULL  ,\
                     &ret );\
     }
 
-    createBuffer ( x ) ;
-    createBuffer ( v ) ;
-    createBuffer ( F ) ;
+    createBuffer ( x ) ;   CL_CHECK ( ret );
+    createBuffer ( v ) ;   CL_CHECK ( ret );
+    createBuffer ( F ) ;   CL_CHECK ( ret );
 
     #undef createBuffer
 }
