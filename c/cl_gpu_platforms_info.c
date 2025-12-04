@@ -3,6 +3,7 @@
 
 #include <cl_gpu_profile_struct.h>
 #include <cl_erro_code.h>
+#include <c_tool.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -48,6 +49,6 @@ void get_platform_info(  const cl_platform_id id ){
 }
 
 void free_platform ( cl_gpu_profile_struct * g ){
-    if ( g->platform_Ids  ){ free(g->platform_Ids);}
+    iffree ( g->platform_Ids  );
 }
 #endif

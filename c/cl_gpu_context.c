@@ -2,6 +2,7 @@
 #define CL_GPU_CONTEXT_AND_QUEUE_C
 #include <stdio.h>
 #include <cl_gpu_profile_struct.h>
+#include <cl_erro_code.h>
 
 void get_context_and_queue( cl_gpu_profile_struct * a ){
 
@@ -28,4 +29,10 @@ void get_context_and_queue( cl_gpu_profile_struct * a ){
             exit( EXIT_FAILURE );
         }    
 }
+
+void free_context ( cl_gpu_profile_struct * g ) { 
+    CL_CHECK ( clReleaseContext(g->context) );
+}
+void free_queue ( cl_gpu_profile_struct * g ) { 
+    CL_CHECK ( clReleaseCommandQueue(g->command_queue) ) ; }
 #endif

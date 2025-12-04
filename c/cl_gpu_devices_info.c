@@ -4,6 +4,7 @@
 #include <cl_version.h>
 #include <cl_gpu_profile_struct.h>
 #include <cl_gpu_tool.h>
+#include <c_tool.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -62,5 +63,8 @@ void get_device_ids( cl_gpu_profile_struct * g ){
     g->device_number = 1 ;
     g->device_Ids = get_devices_info(  &g->device_number , g->platform_Ids [ i ]  ) ;
 
+}
+void free_device ( cl_gpu_profile_struct * g ){
+    iffree ( g->device_Ids  );
 }
 #endif

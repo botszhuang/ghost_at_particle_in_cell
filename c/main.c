@@ -23,11 +23,12 @@ int main()
     ret = clFlush(g->command_queue);
     ret = clFinish(g->command_queue);
     if ( g->kernel        ){ ret = clReleaseKernel (g->kernel);            }
-    if ( g->program       ){ ret = clReleaseProgram(g->program);           }
-    if ( g->command_queue ){ ret = clReleaseCommandQueue(g->command_queue);}
-    if ( g->context       ){ ret = clReleaseContext(g->context);           }
+    free_program  ( g );
+    free_queue    ( g );
+    free_context  ( g );
+    free_device   ( g );
     free_platform ( g );
-    free ( g ) ;
+    iffree ( g ) ;
 
     return EXIT_SUCCESS;
 }

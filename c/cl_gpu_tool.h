@@ -14,9 +14,13 @@ void free_platform ( cl_gpu_profile_struct * g ) ;
 
 cl_device_id * get_devices_info(  unsigned int * divce_numPtr , cl_platform_id platforms  ) ;
 void get_device_ids( cl_gpu_profile_struct * g ) ;
+void free_device ( cl_gpu_profile_struct * g ) ;
 
 void get_context_and_queue ( cl_gpu_profile_struct * a ) ;
+void free_context ( cl_gpu_profile_struct * a ) ;
+void free_queue   ( cl_gpu_profile_struct * a ) ;
+
 void get_program ( cl_gpu_profile_struct * a ) ;
-void get_program ( cl_gpu_profile_struct * a ) ;
+void free_program ( cl_gpu_profile_struct * a ) ;
 
 #endif
