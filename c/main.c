@@ -1,6 +1,7 @@
 
 #include <stdlib.h>
 #include <c_tool.h>
+#include <c_type.h>
 #include <cl_gpu_tool.h>
 #include <cl_run_kernel.h>
 
@@ -14,6 +15,21 @@ int main(){
     get_kernel  ( g ) ;
 
     run_hello_world ( g ) ;
+    
+    test_particle_profile_struct p ;
+    p.number = 100 ;
+
+    #define mallocP(a) ( malloc( p.number * sizeof ( (a)[ 0 ] ) )) 
+    p.x = mallocP( p.x ) ; 
+    p.v = mallocP( p.v ) ;
+    p.F = mallocP( p.F ) ;
+    #undef mallocP
+
+
+
+    iffree ( p.x );
+    iffree ( p.v );
+    iffree ( p.F );
 
     // Clean up
     flush_and_finish_queue ( g ) ;
