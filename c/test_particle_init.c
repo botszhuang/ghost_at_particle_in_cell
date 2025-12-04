@@ -1,7 +1,7 @@
-#ifndef C_TEST_PARTICLE_INIT_C
-#define C_TEST_PARTICLE_INIT_C
+#ifndef TEST_PARTICLE_INIT_C
+#define TEST_PARTICLE_INIT_C
 #include <c_tool.h>
-#include <c_type.h>
+#include <test_particle_type.h>
 
 void init_test_particle_status ( test_particle_profile_struct * p ){
 

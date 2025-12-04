@@ -1,8 +1,8 @@
-#ifndef C_TEST_PARTICLE_PRINT_C
-#define C_TEST_PARTICLE_PRINT_C
+#ifndef TEST_PARTICLE_PRINT_C
+#define TEST_PARTICLE_PRINT_C
 #include <stdio.h>
 #include <c_tool.h>
-#include <c_type.h>
+#include <test_particle_type.h>
 
 void print_test_particle ( test_particle_profile_struct * p ){
 
