@@ -27,15 +27,20 @@ int main(){
 
     cl_init_test_particle_mem ( p , g );
     
+    // write data to GPU
+    pX_all_from_host_to_gpu ( p , g ) ;
+    pV_all_from_host_to_gpu ( p , g ) ;
+    pF_all_from_host_to_gpu ( p , g ) ;
+
 
     // Clean up
     flush_and_finish_queue ( g ) ;
-
-    cl_free_test_particle_mem ( p );
-
     free_kernel   ( g );
     free_program  ( g );
     free_queue    ( g );
+
+    cl_free_test_particle_mem ( p );
+
     free_context  ( g );
     free_device   ( g );
     free_platform ( g );

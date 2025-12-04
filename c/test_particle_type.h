@@ -24,9 +24,9 @@ typedef struct{
   cl_mem cl_v ;
   cl_mem cl_F ;
 
-  unsigned int cl_x_total_bit ;
-  unsigned int cl_v_total_bit ;
-  unsigned int cl_F_total_bit ;
+  unsigned int cl_x_total_bytes ;
+  unsigned int cl_v_total_bytes ;
+  unsigned int cl_F_total_bytes ;
 
 } test_particle_profile_struct ;
 

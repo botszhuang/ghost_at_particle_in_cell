@@ -31,19 +31,19 @@ void cl_init_test_particle_mem ( test_particle_profile_struct * p , cl_gpu_profi
 
     cl_int ret = 0 ;
 
-    #define createBuffer(cl_x,cl_x_bit,x){\
-        cl_x_bit = p->number * sizeof ( cl_3D_struct ) ;\
-        cl_x = clCreateBuffer(\
+    #define createBuffer(name){\
+        p->cl_##name##_total_bytes = p->number * sizeof ( cl_3D_struct ) ;\
+        p->cl_##name = clCreateBuffer(\
                     g->context,\
                     CL_MEM_READ_WRITE,\
-                    cl_x_bit ,\
-                    ( void* ) x  ,\
+                    p->cl_##name##_total_bytes ,\
+                    ( void* ) p->name  ,\
                     &ret );\
     }
 
-    createBuffer ( (p->cl_x) , (p->cl_x_total_bit), (p->x) ) ;
-    createBuffer ( (p->cl_v) , (p->cl_v_total_bit), (p->v) ) ;
-    createBuffer ( (p->cl_F) , (p->cl_F_total_bit), (p->F) ) ;
+    createBuffer ( x ) ;
+    createBuffer ( v ) ;
+    createBuffer ( F ) ;
 
     #undef createBuffer
 }

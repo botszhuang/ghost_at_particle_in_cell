@@ -14,4 +14,7 @@ void cl_init_test_particle_mem ( test_particle_profile_struct * p , cl_gpu_profi
 void cl_free_test_particle_mem ( test_particle_profile_struct * p  );
 
 
+void pX_all_from_host_to_gpu ( test_particle_profile_struct * p , cl_gpu_profile_struct * g ) ;
+void pV_all_from_host_to_gpu ( test_particle_profile_struct * p , cl_gpu_profile_struct * g ) ;
+void pF_all_from_host_to_gpu ( test_particle_profile_struct * p , cl_gpu_profile_struct * g ) ;
 #endif
