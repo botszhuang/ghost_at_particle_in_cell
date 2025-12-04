@@ -47,5 +47,15 @@ void cl_init_test_particle_mem ( test_particle_profile_struct * p , cl_gpu_profi
 
     #undef createBuffer
 }
+void cl_free_test_particle_mem ( test_particle_profile_struct * p  ){
+
+    #define cl_iffree(a) if (a) { clReleaseMemObject(a); a = NULL; }
+        
+        cl_iffree ( p->cl_x ) ;
+        cl_iffree ( p->cl_v ) ;
+        cl_iffree ( p->cl_F ) ; 
+
+    #undef cl_iffree
+}
 
 #endif

@@ -25,10 +25,14 @@ int main(){
     init_test_particle_status ( p ) ;
     print_test_particle       ( p ) ;
 
-    free_test_particle_mem ( p ) ;
+    cl_init_test_particle_mem ( p , g );
+    
 
     // Clean up
     flush_and_finish_queue ( g ) ;
+
+    cl_free_test_particle_mem ( p );
+
     free_kernel   ( g );
     free_program  ( g );
     free_queue    ( g );
@@ -36,6 +40,8 @@ int main(){
     free_device   ( g );
     free_platform ( g );
     iffree ( g ) ;
+
+    free_test_particle_mem ( p ) ;
 
     return EXIT_SUCCESS;
 }
