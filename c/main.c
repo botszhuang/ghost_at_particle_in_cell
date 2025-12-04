@@ -15,8 +15,6 @@ int main(){
     get_device_ids( g ) ;
     get_context_and_queue ( g ) ;
 
-
-
     get_program ( g ) ;
     get_kernel  ( g ) ;
 
@@ -26,7 +24,6 @@ int main(){
 
     init_test_particle_mem  ( & p ) ;
     init_test_particle_status ( p ) ;
-    print_test_particle       ( p ) ;
 
     cl_init_test_particle_mem ( p , g );
   
@@ -43,6 +40,7 @@ int main(){
     gpu_to_host ( p , g , v ) ;
     gpu_to_host ( p , g , F ) ;
 
+    print_test_particle ( p ) ;
 
     // Clean up
     flush_and_finish_queue ( g ) ;
