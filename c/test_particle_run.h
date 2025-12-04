@@ -1,5 +1,5 @@
-#ifndef C_RUN_H
-#define C_RUN_H
+#ifndef TEST_PARTICLE_RUN_H
+#define TEST_PARTICLE_RUN_H
 
 #include <cl_gpu_profile_struct.h>
 #include <test_particle_type.h>

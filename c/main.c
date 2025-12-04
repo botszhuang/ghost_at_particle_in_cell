@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include <c_tool.h>
-#include <c_run.h>
+#include <test_particle_run.h>
 
 #include <cl_gpu_tool.h>
 #include <cl_run_kernel.h>
