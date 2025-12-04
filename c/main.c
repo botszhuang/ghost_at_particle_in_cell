@@ -7,11 +7,7 @@
 
 #include <c_tool.h>
 
-
-int main()
-{
-
-    cl_int ret;
+int main(){
 
     cl_gpu_profile_struct * g = calloc ( 1 , sizeof ( cl_gpu_profile_struct ) )  ;   
     get_platform_number_and_ids ( g ) ;                                
@@ -21,8 +17,8 @@ int main()
     get_kernel  ( g ) ;
 
     // Clean up
-    ret = clFlush(g->command_queue);
-    ret = clFinish(g->command_queue);
+    CL_CHECK( clFlush (g->command_queue));
+    CL_CHECK( clFinish(g->command_queue));
     free_kernel   ( g );
     free_program  ( g );
     free_queue    ( g );
