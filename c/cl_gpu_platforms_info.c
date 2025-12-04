@@ -46,4 +46,7 @@ void get_platform_info(  const cl_platform_id id ){
        
 }
 
+void free_platform ( cl_gpu_profile_struct * g ){
+    if ( g->platform_Ids  ){ free(g->platform_Ids);}
+}
 #endif
