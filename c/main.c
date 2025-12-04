@@ -33,9 +33,15 @@ int main(){
 
     
     // write data to GPU
-    pX_all_from_host_to_gpu ( p , g ) ;
-    pV_all_from_host_to_gpu ( p , g ) ;
-    pF_all_from_host_to_gpu ( p , g ) ;
+    host_to_gpu ( p , g , x ) ;
+    host_to_gpu ( p , g , v ) ;
+    host_to_gpu ( p , g , F ) ;
+
+
+    // Read data from GPU
+    gpu_to_host ( p , g , x ) ;
+    gpu_to_host ( p , g , v ) ;
+    gpu_to_host ( p , g , F ) ;
 
 
     // Clean up

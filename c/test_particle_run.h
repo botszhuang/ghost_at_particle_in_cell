@@ -13,8 +13,18 @@ void print_test_particle ( test_particle_profile_struct * p );
 void cl_init_test_particle_mem ( test_particle_profile_struct * p , cl_gpu_profile_struct * g );
 void cl_free_test_particle_mem ( test_particle_profile_struct * p  );
 
+#define host_to_gpu(p, g, name) \
+    CL_CHECK( clEnqueueWriteBuffer( g->queue, (p)->cl_##name, \
+                                    CL_TRUE, 0, \
+                                    (p)->cl_##name##_total_bytes, \
+                                    (p)->name, 0, NULL, NULL ) )
 
-void pX_all_from_host_to_gpu ( test_particle_profile_struct * p , cl_gpu_profile_struct * g ) ;
-void pV_all_from_host_to_gpu ( test_particle_profile_struct * p , cl_gpu_profile_struct * g ) ;
-void pF_all_from_host_to_gpu ( test_particle_profile_struct * p , cl_gpu_profile_struct * g ) ;
+#define gpu_to_host(p, g, name) \
+    CL_CHECK( clEnqueueReadBuffer( g->queue, p->cl_##name, \
+                                   CL_TRUE, \
+                                   0, \
+                                   p->cl_##name##_total_bytes, \
+                                   p->name, \
+                                   0, NULL, NULL ) )
+
 #endif

@@ -20,14 +20,12 @@ void init_test_particle_mem ( test_particle_profile_struct ** pPtr ){
     
     #undef mallocP
 }
-
 void free_test_particle_mem ( test_particle_profile_struct * p ){
     iffree ( p->x );
     iffree ( p->v );
     iffree ( p->F ); 
     iffree ( p ) ;
 }
-
 void cl_init_test_particle_mem ( test_particle_profile_struct * p , cl_gpu_profile_struct * g ){
 
     cl_int ret = 0 ;
