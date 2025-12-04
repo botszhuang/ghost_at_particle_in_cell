@@ -1,11 +1,8 @@
-#include <cl_gpu_tool.h>
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <sys/stat.h>
-
 #include <c_tool.h>
+#include <cl_gpu_tool.h>
+#include <cl_run_kernel.h>
 
 int main(){
 
@@ -15,6 +12,8 @@ int main(){
     get_context_and_queue ( g ) ;
     get_program ( g ) ;
     get_kernel  ( g ) ;
+
+    run_hello_world ( g ) ;
 
     // Clean up
     flush_and_finish_queue ( g ) ;
