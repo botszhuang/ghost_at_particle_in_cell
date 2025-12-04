@@ -23,4 +23,8 @@ void free_queue   ( cl_gpu_profile_struct * a ) ;
 void get_program ( cl_gpu_profile_struct * a ) ;
 void free_program ( cl_gpu_profile_struct * a ) ;
 
+
+void get_kernel  ( cl_gpu_profile_struct * g ) ;
+void free_kernel ( cl_gpu_profile_struct * g ) ;
+
 #endif

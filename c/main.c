@@ -18,11 +18,12 @@ int main()
     get_device_ids( g ) ;
     get_context_and_queue ( g ) ;
     get_program ( g ) ;
+    get_kernel  ( g ) ;
 
     // Clean up
     ret = clFlush(g->command_queue);
     ret = clFinish(g->command_queue);
-    if ( g->kernel        ){ ret = clReleaseKernel (g->kernel);            }
+    free_kernel   ( g );
     free_program  ( g );
     free_queue    ( g );
     free_context  ( g );
