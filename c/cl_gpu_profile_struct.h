@@ -11,7 +11,7 @@ typedef struct{
     cl_device_id * device_Ids ;
 
     cl_context context ;
-    cl_command_queue command_queue ;
+    cl_command_queue queue ;
     cl_program program ;
     cl_kernel kernel ;
 }cl_gpu_profile_struct;

@@ -19,6 +19,7 @@ void free_device ( cl_gpu_profile_struct * g ) ;
 void get_context_and_queue ( cl_gpu_profile_struct * a ) ;
 void free_context ( cl_gpu_profile_struct * a ) ;
 void free_queue   ( cl_gpu_profile_struct * a ) ;
+void flush_and_finish_queue ( cl_gpu_profile_struct * g ) ;
 
 void get_program ( cl_gpu_profile_struct * a ) ;
 void free_program ( cl_gpu_profile_struct * a ) ;

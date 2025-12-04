@@ -17,8 +17,7 @@ int main(){
     get_kernel  ( g ) ;
 
     // Clean up
-    CL_CHECK( clFlush (g->command_queue));
-    CL_CHECK( clFinish(g->command_queue));
+    flush_and_finish_queue ( g ) ;
     free_kernel   ( g );
     free_program  ( g );
     free_queue    ( g );

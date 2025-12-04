@@ -11,33 +11,31 @@ void get_context_and_queue( cl_gpu_profile_struct * a ){
     const unsigned int index = 0 ;
 
     a->context = clCreateContext(NULL, 1,&( a->device_Ids[ index ]) , NULL, NULL, &ret);
-    if (ret != CL_SUCCESS) {
-        fprintf(stderr, "Error creating context: %d\n", ret);
-        exit( EXIT_FAILURE );
-    }
+    CL_CHECK (ret) ;
     
     //#if defined(CL_VERSION_2_0)
         // OpenCL 2.0+ headers, preferred
         const cl_queue_properties props[] = { 0 };
-        a->command_queue = clCreateCommandQueueWithProperties(a->context, a->device_Ids[ index ], props, &ret);
+        a->queue = clCreateCommandQueueWithProperties(a->context, a->device_Ids[ index ], props, &ret);
     //#else
         // OpenCL 1.2
     //    command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
     //#endif
-        if (ret != CL_SUCCESS) {
-            fprintf(stderr, "Failed to create command queue: %d\n", ret);
-            exit( EXIT_FAILURE );
-        }    
+        CL_CHECK ( ret ) ; 
 }
 
 void free_context ( cl_gpu_profile_struct * g ) { 
-    if( g->command_queue ){
+    if( g->context ){
         CL_CHECK ( clReleaseContext(g->context) ) ; 
     }
 }
 void free_queue ( cl_gpu_profile_struct * g ) { 
-    if( g->command_queue ) {
-        CL_CHECK ( clReleaseCommandQueue(g->command_queue) ) ;
+    if( g->queue ) {
+        CL_CHECK ( clReleaseCommandQueue(g->queue) ) ;
     } 
+}
+void flush_and_finish_queue ( cl_gpu_profile_struct * g ){
+    CL_CHECK( clFlush (g->queue));
+    CL_CHECK( clFinish(g->queue));
 }
 #endif
