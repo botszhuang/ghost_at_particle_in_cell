@@ -1,8 +1,8 @@
 #ifndef CL_GET_PLATFORMS_INFO_C
 #define CL_GET_PLATFORMS_INFO_C
 
-#include <cl_version.h>
 #include <cl_gpu_profile_struct.h>
+#include <cl_erro_code.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -13,16 +13,17 @@ void get_platform_number_and_ids( cl_gpu_profile_struct * g ){
     cl_uint num_platforms;
     cl_int ret = 0 ;
 
-    ret = clGetPlatformIDs( 0, NULL,  &num_platforms );
+    CL_CHECK ( clGetPlatformIDs( 0, NULL,  &num_platforms ) ) ;
 
-    if (ret != CL_SUCCESS || num_platforms == 0) {
-        printf("No OpenCL platforms found! Error: %d\n", ret);
-        exit(1) ;
+    if (num_platforms == 0) {
+        printf("No OpenCL platforms found! \n");
+        exit( EXIT_FAILURE ) ;
     }
+
     g->platform_id_num = num_platforms ; 
     g->platform_Ids = calloc ( 0 , sizeof( cl_platform_id ) * num_platforms);
    
-    clGetPlatformIDs( num_platforms,  g->platform_Ids , NULL);
+    CL_CHECK ( clGetPlatformIDs( num_platforms,  g->platform_Ids , NULL) );
     printf("Found %u platform(s)\n", num_platforms);
 }
 

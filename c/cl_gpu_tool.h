@@ -4,6 +4,7 @@
 
 #include <cl_version.h>
 #include <cl_gpu_profile_struct.h>
+#include <cl_erro_code.h>
 
 #include <stdlib.h>
 

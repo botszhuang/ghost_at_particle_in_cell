@@ -5,6 +5,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
+#include <c_tool.h>
 
 
 int main()

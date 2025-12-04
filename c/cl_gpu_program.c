@@ -2,6 +2,8 @@
 #define CL_GPU_PROGRAM_C
 
 #include <cl_gpu_profile_struct.h>
+#include <cl_erro_code.h>
+
 #include <stdio.h>
 #include "hello_world_cl.h"
 
@@ -13,9 +15,7 @@ void get_program ( cl_gpu_profile_struct * a ){
     cl_int ret = 0 ;
 
     a->program = clCreateProgramWithSource( a->context, 1, &source, &length, &ret);
-    if (ret != CL_SUCCESS) {
-        printf("Error creating program: %d\n", ret);
-    }
+    CL_CHECK ( ret ) ;
 
     ret = clBuildProgram( a->program, 1, a->device_Ids , NULL, NULL, NULL);
     if (ret != CL_SUCCESS) {

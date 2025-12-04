@@ -14,7 +14,7 @@ cl_s     := $(shell find $(cl_DIR) -name *.cl )
 cl_h_s   := $(patsubst $(cl_DIR)/%.cl,$(cl_h_DIR)/%_cl.h,$(cl_s))
 clInc    := -I./$(cl_h_DIR)
 
-CCFLAGS := $(ccInc) $(clInc)
+CCFLAGS := $(ccInc) $(clInc) -DDEBUG
 LDFLAGS := -lOpenCL -lm
 ################################################################################
 
