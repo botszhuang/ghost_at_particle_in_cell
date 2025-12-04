@@ -5,12 +5,20 @@
 #include <cl_erro_code.h>
 
 #include <stdio.h>
-#include "hello_world_cl.h"
-#include "leapfrog_step_cl.h"
+//#include "hello_world_cl.h"
+//#include "leapfrog_step_cl.h"
+
+//extern unsigned char _hello_world_cl_start[];
+//extern unsigned char _leapfrog_step_cl_start[];
+
+extern unsigned char _binary_cl_hello_world_cl_start[];
+extern unsigned char _binary_cl_leapfrog_step_cl_start[];
 
 void get_program ( cl_gpu_profile_struct * a ){
 
-    const char * source[] = { hello_world , leapfrog_step };
+    //const char * source[] = { hello_world , leapfrog_step };
+    const char * source[] = { _binary_cl_hello_world_cl_start , 
+                              _binary_cl_leapfrog_step_cl_start };
 
     cl_int ret = 0 ;
 

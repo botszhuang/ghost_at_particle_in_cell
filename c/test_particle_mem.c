@@ -10,20 +10,20 @@ void init_test_particle_mem ( test_particle_profile_struct ** pPtr ){
     * pPtr = calloc ( 1 , sizeof ( * pPtr[0] ) ) ;
     test_particle_profile_struct * p = * pPtr ;
    
-    p->number = 100 ;
+    p->number = 5 ;
 
     #define mallocP(a) ( malloc( p->number * sizeof ( (a)[ 0 ] ) )) 
     
     p->x = mallocP( p->x ) ; 
-    p->v = mallocP( p->v ) ;
-    p->F = mallocP( p->F ) ;
+    //p->v = mallocP( p->v ) ;
+    //p->F = mallocP( p->F ) ;
     
     #undef mallocP
 }
 void free_test_particle_mem ( test_particle_profile_struct * p ){
     iffree ( p->x );
-    iffree ( p->v );
-    iffree ( p->F ); 
+    //iffree ( p->v );
+    //iffree ( p->F ); 
     iffree ( p ) ;
 }
 void cl_init_test_particle_mem ( test_particle_profile_struct * p , cl_gpu_profile_struct * g ){
@@ -31,7 +31,7 @@ void cl_init_test_particle_mem ( test_particle_profile_struct * p , cl_gpu_profi
     cl_int ret = 0 ;
 
     #define createBuffer(name){\
-        p->cl_##name##_total_bytes = p->number * sizeof ( cl_3D_struct ) ;\
+        p->cl_##name##_total_bytes = p->number * sizeof ( p->name [0] ) ;\
         p->cl_##name = clCreateBuffer(\
                     g->context,\
                     CL_MEM_READ_WRITE,\
@@ -41,8 +41,8 @@ void cl_init_test_particle_mem ( test_particle_profile_struct * p , cl_gpu_profi
     }
 
     createBuffer ( x ) ;   CL_CHECK ( ret );
-    createBuffer ( v ) ;   CL_CHECK ( ret );
-    createBuffer ( F ) ;   CL_CHECK ( ret );
+    //createBuffer ( v ) ;   CL_CHECK ( ret );
+    //createBuffer ( F ) ;   CL_CHECK ( ret );
 
     #undef createBuffer
 }
@@ -51,8 +51,8 @@ void cl_free_test_particle_mem ( test_particle_profile_struct * p  ){
     #define cl_iffree(a) if (a) { clReleaseMemObject(a); a = NULL; }
         
         cl_iffree ( p->cl_x ) ;
-        cl_iffree ( p->cl_v ) ;
-        cl_iffree ( p->cl_F ) ; 
+        //cl_iffree ( p->cl_v ) ;
+        //cl_iffree ( p->cl_F ) ; 
 
     #undef cl_iffree
 }

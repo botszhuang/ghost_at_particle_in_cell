@@ -10,20 +10,18 @@ void print_test_particle ( test_particle_profile_struct * p ){
 
 
     #define X (p->x[i])
-    #define V (p->v[i])
-    #define F (p->F[i])
+    //#define V (p->v[i])
+    //#define F (p->F[i])
 
     for ( unsigned int i = 0 ; i < num ; i++ ) {
-        fprintf( stdout, "\t%i) %lf %lf %lf , %lf %lf %lf, %lf %lf %lf\n",
+        fprintf( stdout, "\t%i) %lf %lf %lf\n",
             i, 
-            X.x, X.y, X.z,
-            V.x, V.y, V.z,
-            F.x, F.y, F.z );
+            X.x, X.y, X.z);
     }
 
     #undef X
-    #undef V
-    #undef F
+    //#undef V
+    //#undef F
  
 }
 

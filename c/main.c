@@ -5,7 +5,7 @@
 #include <test_particle_run.h>
 
 #include <cl_gpu_tool.h>
-#include <cl_run_kernel.h>
+#include <cl_kernel.h>
 
 
 int main(){
@@ -16,9 +16,10 @@ int main(){
     get_context_and_queue ( g ) ;
 
     get_program ( g ) ;
-    get_kernel  ( g ) ;
+    get_kernel_hello_world  ( g ) ;
+    run_kernel_hello_world ( g ) ;
 
-    run_hello_world ( g ) ;
+    get_kernel_leapfrog_step ( g ) ;
     
     test_particle_profile_struct * p ;
 
@@ -28,23 +29,29 @@ int main(){
     cl_init_test_particle_mem ( p , g );
   
 
+    setArg_for_kernel_leapfrog_step ( p , g ) ;
+    print_test_particle ( p ) ;
     
     // write data to GPU
     host_to_gpu ( p , g , x ) ;
-    host_to_gpu ( p , g , v ) ;
-    host_to_gpu ( p , g , F ) ;
+    //host_to_gpu ( p , g , v ) ;
+    //host_to_gpu ( p , g , F ) ;
+
+    run_kernel_leapfrog_step ( g ) ;
 
 
     // Read data from GPU
     gpu_to_host ( p , g , x ) ;
-    gpu_to_host ( p , g , v ) ;
-    gpu_to_host ( p , g , F ) ;
+    //gpu_to_host ( p , g , v ) ;
+    //gpu_to_host ( p , g , F ) ;
 
     print_test_particle ( p ) ;
 
     // Clean up
     flush_and_finish_queue ( g ) ;
-    free_kernel   ( g );
+    free_kernel_hello_world   ( g );
+    free_kernel_leapfrog_step ( g );
+    
     free_program  ( g );
     free_queue    ( g );
 

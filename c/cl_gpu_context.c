@@ -13,14 +13,14 @@ void get_context_and_queue( cl_gpu_profile_struct * a ){
     a->context = clCreateContext(NULL, 1,&( a->device_Ids[ index ]) , NULL, NULL, &ret);
     CL_CHECK (ret) ;
     
-    //#if defined(CL_VERSION_2_0)
-        // OpenCL 2.0+ headers, preferred
+    #if defined(CL_VERSION_2_0) || (CL_VERSION_3_0)
+        OpenCL 2.0+ headers, preferred
         const cl_queue_properties props[] = { 0 };
         a->queue = clCreateCommandQueueWithProperties(a->context, a->device_Ids[ index ], props, &ret);
-    //#else
+    #else
         // OpenCL 1.2
-    //    command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
-    //#endif
+        a->queue = clCreateCommandQueue(a->context, a->device_Ids [ index ], 0, &ret);
+    #endif
         CL_CHECK ( ret ) ; 
 }
 
