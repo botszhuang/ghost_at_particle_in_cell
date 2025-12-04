@@ -2,6 +2,7 @@
 cl_h/*
 exe/*
 o/*
+.vscode/*
 
 # Prerequisites
 *.d
