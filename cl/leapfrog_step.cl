@@ -1,7 +1,7 @@
 // leapfrog_step.cl
 
 __kernel void leapfrog_step(
-    __global double3 * x ) 
+    __global x_dim * x ) 
 {
     int i = get_global_id(0);
 
