@@ -34,16 +34,16 @@ int main(){
     
     // write data to GPU
     host_to_gpu ( p , g , x ) ;
-    //host_to_gpu ( p , g , v ) ;
-    //host_to_gpu ( p , g , F ) ;
+    host_to_gpu ( p , g , v ) ;
+    host_to_gpu ( p , g , F ) ;
 
     run_kernel_leapfrog_step ( g ) ;
 
 
     // Read data from GPU
     gpu_to_host ( p , g , x ) ;
-    //gpu_to_host ( p , g , v ) ;
-    //gpu_to_host ( p , g , F ) ;
+    gpu_to_host ( p , g , v ) ;
+    gpu_to_host ( p , g , F ) ;
 
     print_test_particle ( p ) ;
 

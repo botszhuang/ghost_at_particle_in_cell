@@ -21,6 +21,8 @@ void free_kernel_leapfrog_step( cl_gpu_profile_struct * g ){
 void setArg_for_kernel_leapfrog_step ( test_particle_profile_struct * p , cl_gpu_profile_struct * g ) {
 
     clSetKernelArg( k , 0 , sizeof ( cl_mem ) , &(p->cl_x) );
+    clSetKernelArg( k , 1 , sizeof ( cl_mem ) , &(p->cl_v) );
+    clSetKernelArg( k , 2 , sizeof ( cl_mem ) , &(p->cl_F) );
 }
 void run_kernel_leapfrog_step( cl_gpu_profile_struct * g ){
     cl_uint work_dim = 1;
