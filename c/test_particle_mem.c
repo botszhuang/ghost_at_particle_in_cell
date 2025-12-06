@@ -17,6 +17,8 @@ void init_test_particle_mem ( test_particle_profile_struct ** pPtr ){
     p->x = mallocP( p->x ) ; 
     p->v = mallocP( p->v ) ;
     p->F = mallocP( p->F ) ;
+    p->m = mallocP( p->m ) ;
+    p->q = mallocP( p->q ) ;
     
     #undef mallocP
 }
@@ -24,6 +26,8 @@ void free_test_particle_mem ( test_particle_profile_struct * p ){
     iffree ( p->x );
     iffree ( p->v );
     iffree ( p->F ); 
+    iffree ( p->m );
+    iffree ( p->q ) ;
     iffree ( p ) ;
 }
 void cl_init_test_particle_mem ( test_particle_profile_struct * p , cl_gpu_profile_struct * g ){
@@ -43,6 +47,8 @@ void cl_init_test_particle_mem ( test_particle_profile_struct * p , cl_gpu_profi
     createBuffer ( x ) ;   CL_CHECK ( ret );
     createBuffer ( v ) ;   CL_CHECK ( ret );
     createBuffer ( F ) ;   CL_CHECK ( ret );
+    createBuffer ( m ) ;   CL_CHECK ( ret );
+    createBuffer ( q ) ;   CL_CHECK ( ret );
 
     #undef createBuffer
 }
@@ -53,6 +59,8 @@ void cl_free_test_particle_mem ( test_particle_profile_struct * p  ){
         cl_iffree ( p->cl_x ) ;
         cl_iffree ( p->cl_v ) ;
         cl_iffree ( p->cl_F ) ; 
+        cl_iffree ( p->cl_m ) ; 
+        cl_iffree ( p->cl_q ) ; 
 
     #undef cl_iffree
 }

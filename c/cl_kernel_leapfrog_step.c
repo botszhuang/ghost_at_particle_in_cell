@@ -23,7 +23,9 @@ void setArg_for_kernel_leapfrog_step ( test_particle_profile_struct * p , cl_gpu
     clSetKernelArg( k , 0 , sizeof ( cl_mem ) , &(p->cl_x) );
     clSetKernelArg( k , 1 , sizeof ( cl_mem ) , &(p->cl_v) );
     clSetKernelArg( k , 2 , sizeof ( cl_mem ) , &(p->cl_F) );
-    clSetKernelArg( k , 3 , sizeof (   *t   ) ,  (   t   ) );
+    clSetKernelArg( k , 3 , sizeof ( cl_mem ) , &(p->cl_m) );
+    clSetKernelArg( k , 4 , sizeof ( cl_mem ) , &(p->cl_q) );
+    clSetKernelArg( k , 5 , sizeof (   *t   ) ,  (   t   ) );
 }
 void run_kernel_leapfrog_step( cl_gpu_profile_struct * g ){
     cl_uint work_dim = 1;

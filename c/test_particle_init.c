@@ -11,6 +11,8 @@ void init_test_particle_status ( test_particle_profile_struct * p ){
         p->x[i] = ( x_dim ) { 1,  2, 3 } ;
         p->v[i] = ( v_dim ) { 20, 21, 22 } ;
         p->F[i] = ( F_dim ) { 30, 31, 32 } ;
+        p->m[i] = 1 ;
+        p->q[i] = 1 ;
     }
  
 }

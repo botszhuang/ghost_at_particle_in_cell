@@ -11,6 +11,8 @@ __kernel void leapfrog_step(
      __global x_dim * x 
    , __global v_dim * v 
    , __global F_dim * F 
+   , __global m_type * m 
+   , __global q_type * q 
    ,          t_type t  // scale
      ) 
 {
@@ -31,9 +33,11 @@ __kernel void leapfrog_step(
 */
     printf("HELLO!\n") ;
     x[i].x += 5 ; 
-    printf("HELLO! %i, %lf %lf %lf,\t%lf %lf %lf,\t%lf %lf %lf,\n",
+    printf("HELLO! %i, %.2lf %.2lf %.2lf,\t%.2lf %.2lf %.2lf,\t%.2lf %.2lf %.2lf,\t%.2lf %.2lf\n",
                   i, x[i].x, x[i].y, x[i].z
                   , v[i].x, v[i].y, v[i].z
-                  , F[i].x, F[i].y, F[i].z) ;
+                  , F[i].x, F[i].y, F[i].z
+                  , m[i] , q[i]
+                  ) ;
 
 }

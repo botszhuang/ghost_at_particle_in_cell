@@ -36,6 +36,8 @@ int main(){
     host_to_gpu ( p , g , x ) ;
     host_to_gpu ( p , g , v ) ;
     host_to_gpu ( p , g , F ) ;
+    host_to_gpu ( p , g , m ) ;
+    host_to_gpu ( p , g , q ) ;
 
     run_kernel_leapfrog_step ( g ) ;
 
@@ -44,6 +46,8 @@ int main(){
     gpu_to_host ( p , g , x ) ;
     gpu_to_host ( p , g , v ) ;
     gpu_to_host ( p , g , F ) ;
+    gpu_to_host ( p , g , m ) ;
+    gpu_to_host ( p , g , q ) ;
 
     print_test_particle ( p ) ;
 

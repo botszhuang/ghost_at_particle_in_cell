@@ -9,3 +9,7 @@
 #endif
 
 #define t_type double
+#define m_type double
+#define q_type double
+
+#define dt 0.1
