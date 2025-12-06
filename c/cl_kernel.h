@@ -10,7 +10,7 @@ void run_kernel_hello_world  ( cl_gpu_profile_struct * g ) ;
 
 void get_kernel_leapfrog_step  ( cl_gpu_profile_struct * g ) ;
 void free_kernel_leapfrog_step ( cl_gpu_profile_struct * g ) ;
-void setArg_for_kernel_leapfrog_step ( test_particle_profile_struct * p , cl_gpu_profile_struct * g ) ;
+void setArg_for_kernel_leapfrog_step ( test_particle_profile_struct * p , cl_gpu_profile_struct * g , t_type * t ) ;
 void run_kernel_leapfrog_step  ( cl_gpu_profile_struct * g ) ;
 
 

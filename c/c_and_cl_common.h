@@ -7,3 +7,5 @@
     #define v_dim cl_double3
     #define F_dim cl_double3
 #endif
+
+#define t_type double

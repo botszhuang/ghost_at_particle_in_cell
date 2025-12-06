@@ -1,18 +1,34 @@
-// leapfrog_step.cl
+// RK4.cl
+/*
+__device void f ( x_dim * out_x , v_dim out_v ,  x_dim x , v_dim v , F_dim a , t ) {
+
+    out_x += v * t ;
+    out_v += a * t ;
+
+}*/
 
 __kernel void leapfrog_step(
-    __global x_dim * x ,
-    __global v_dim * v ,
-    __global F_dim * F
+     __global x_dim * x 
+   , __global v_dim * v 
+   , __global F_dim * F 
+   ,          t_type t  // scale
      ) 
 {
     int i = get_global_id(0);
 
-    // Update velocity by half-step
-    //v[i] += F[i] * (dt * 0.5f * inv_mass);
+//    double dt = 0.1 ;
+//    double mass = 1 ;
+    
+//    double half_dt = 0.5 * dt ;
+//    F_dim a = 0 ;
+/*    
+    x_dim x_k1 , x_k2 , x_k3 , x_k4 ; 
+    v_dim v_k1 , v_k2 , v_k3 , v_k4 ; 
 
-    // Update position by full-step
-    //x[i] +=  x[i] + 2 ;//v[i] * dt;
+    a = F[i] / mass ;
+    
+    f ( x_k1 , v_k1 , x , v , a , t ) ;
+*/
     printf("HELLO!\n") ;
     x[i].x += 5 ; 
     printf("HELLO! %i, %lf %lf %lf,\t%lf %lf %lf,\t%lf %lf %lf,\n",

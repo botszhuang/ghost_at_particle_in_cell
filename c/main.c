@@ -7,9 +7,9 @@
 #include <cl_gpu_tool.h>
 #include <cl_kernel.h>
 
-
 int main(){
 
+  
     cl_gpu_profile_struct * g = calloc ( 1 , sizeof ( cl_gpu_profile_struct ) )  ;   
     get_platform_number_and_ids ( g ) ;                                
     get_device_ids( g ) ;
@@ -20,16 +20,16 @@ int main(){
     run_kernel_hello_world ( g ) ;
 
     get_kernel_leapfrog_step ( g ) ;
-    
+
+    t_type t = 0 ;
     test_particle_profile_struct * p ;
 
-    init_test_particle_mem  ( & p ) ;
+    init_test_particle_mem  ( & p  ) ;
     init_test_particle_status ( p ) ;
 
     cl_init_test_particle_mem ( p , g );
   
-
-    setArg_for_kernel_leapfrog_step ( p , g ) ;
+    setArg_for_kernel_leapfrog_step ( p , g , &t ) ;
     print_test_particle ( p ) ;
     
     // write data to GPU
