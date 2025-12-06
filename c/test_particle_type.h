@@ -6,7 +6,7 @@
 
 typedef struct{
   
-  unsigned int number ;  
+  test_particle_number_type number ;  
 
   x_dim * x ;
   v_dim * v ;

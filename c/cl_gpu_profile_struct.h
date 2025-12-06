@@ -14,7 +14,8 @@ typedef struct{
     cl_command_queue queue ;
     cl_program program ;
     cl_kernel kernel_hello_world ;
-    cl_kernel kernel_leapfrog_step ;
+    cl_kernel kernel_leapfrog_step0 ;
+    cl_kernel kernel_leapfrog_step1 ;
     
 }cl_gpu_profile_struct;
 

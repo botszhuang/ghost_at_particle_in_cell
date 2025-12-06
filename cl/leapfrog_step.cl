@@ -1,39 +1,39 @@
-// RK4.cl
+// leapfrog_step.cl
+#define aFunc(i) (FPtr[i]*(qPtr[i]/mPtr[i])  )
 
-#define f(out_x,out_v,x,v,a,t){\
-    (out_x) = (x) + ( (v) * t ) ;\
-    (out_v) = (v) + ( (a) * t ) ;\
-}
-
-__kernel void leapfrog_step(
+__kernel void leapfrog_step0(
      __global x_dim * xPtr 
    , __global v_dim * vPtr 
    , __global F_dim * FPtr 
    , __global m_type * mPtr 
    , __global q_type * qPtr 
-   ,          t_type t  // scale
-     ) 
-{
-    int i = get_global_id(0);
-   
+   ,          t_type tIn  // scale
+   ,          test_particle_number_type pNum  // scale
+     ) {
+    
+    const int gid = get_global_id(0);
+    const test_particle_number_type g_id_size = get_global_size (0) ;
+
     x_dim x = 0 ;
     v_dim v = 0 ;
     F_dim a = 0 ;
-    
-    x_dim x_k1 , x_k2 , x_k3 , x_k4 ; 
-    v_dim v_k1 , v_k2 , v_k3 , v_k4 ; 
 
-    a = FPtr[i] * ( qPtr[i] / (mPtr[i])) ;
-    
-    x = xPtr[i] ;
-    v = vPtr[i] ;
-    f ( x_k1 , v_k1 , x , v , a , t ) ;
-    
+    const t_type half_dt = 0.5 * dt ;
 
-    /*f ( x_k2 , v_k2 , x[i] , v[i] , a , t ) ;
-    f ( x_k3 , v_k3 , x[i] , v[i] , a , t ) ;
-    f ( x_k4 , v_k4 , x[i] , v[i] , a , t ) ;
-*/
+    for ( unsigned int i = gid ; i < pNum ; i += g_id_size ){
+        
+        x = xPtr [ i ] ;
+        v = vPtr [ i ] ;
+        a = aFunc(i) ;
+
+        // Leapfrog step#1
+        v += ( a * half_dt ) ; // half-step velocity
+        x += ( v * dt ) ;          // full-step position
+    
+        xPtr [ i ] = x ;
+        vPtr [ i ] = v ;
+
+  
     printf("HELLO!\n") ;
     xPtr[i].x += 5 ; 
     printf("HELLO! %i, %.2lf %.2lf %.2lf,\t%.2lf %.2lf %.2lf,\t%.2lf %.2lf %.2lf,\t%.2lf %.2lf\n",
@@ -42,5 +42,44 @@ __kernel void leapfrog_step(
                   , FPtr[i].x, FPtr[i].y, FPtr[i].z
                   , mPtr[i] , qPtr[i]
                   ) ;
-
+    }
 }
+
+__kernel void leapfrog_step1(
+     __global x_dim * xPtr 
+   , __global v_dim * vPtr 
+   , __global F_dim * FPtr 
+   , __global m_type * mPtr 
+   , __global q_type * qPtr 
+   ,          t_type tIn  // scale
+   ,          test_particle_number_type pNum  // scale
+){
+    const int gid = get_global_id(0);
+    const test_particle_number_type g_id_size = get_global_size (0) ;
+
+    v_dim v = 0 ;
+    F_dim a = 0 ;
+    const t_type half_dt = 0.5 * dt ;
+
+    for ( unsigned int i = gid ; i < pNum ; i += g_id_size ){
+        
+        v = vPtr [ i ] ;
+        a = aFunc(i) ;
+
+        // Leapfrog step#2
+        v += ( a * half_dt ) ; // half-step velocity
+    
+        vPtr [ i ] = v ;
+
+  
+    printf("HELLO!\n") ;
+    xPtr[i].x += 5 ; 
+    printf("HELLO! %i, %.2lf %.2lf %.2lf,\t%.2lf %.2lf %.2lf,\t%.2lf %.2lf %.2lf,\t%.2lf %.2lf\n",
+                  i, xPtr[i].x, xPtr[i].y, xPtr[i].z
+                  , vPtr[i].x, vPtr[i].y, vPtr[i].z
+                  , FPtr[i].x, FPtr[i].y, FPtr[i].z
+                  , mPtr[i] , qPtr[i]
+                  ) ;
+    }    
+}
+#undef aFunc

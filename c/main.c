@@ -39,7 +39,8 @@ int main(){
     host_to_gpu ( p , g , m ) ;
     host_to_gpu ( p , g , q ) ;
 
-    run_kernel_leapfrog_step ( g ) ;
+    run_kernel_leapfrog_step0 ( g ) ;
+    run_kernel_leapfrog_step1 ( g ) ;
 
 
     // Read data from GPU
