@@ -4,6 +4,7 @@ exe/*
 o/*
 .vscode/*
 output.log
+myrsync.sh
 
 # Prerequisites
 *.d
