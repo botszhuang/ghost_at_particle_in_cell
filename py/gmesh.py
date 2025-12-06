@@ -13,7 +13,7 @@ geom = pygmsh.geo.Geometry()
 rectangle = geom.add_rectangle(
     xmin=0.0, ymin=0.0, z=0.0,
     xmax=2.0, ymax=2.0,
-    mesh_size=0.2
+    mesh_size=0.5
 )
 
 # Generate the mesh (pygmsh handles gmsh initialization/finalization)
@@ -24,6 +24,17 @@ points = mesh.points[:, :2]
 cells = mesh.cells_dict['triangle']
 
 gmsh.finalize()
+
+# Save points (nodes) to text file
+np.savetxt("nodes.txt", points, fmt="%.6f", header="#NodeID: X Y", comments="")
+
+# Save cells (triangles) to text file
+# We add 1 to indices to use 1-based numbering (optional)
+cells_1_based = cells + 1
+np.savetxt("elements.txt", cells_1_based, fmt="%d", header="#ElementID: Node1 Node2 Node3", comments="")
+
+print("Mesh nodes saved to nodes.txt")
+print("Mesh elements saved to elements.txt")
 
 # Plotting the mesh
 plt.figure(figsize=(6,6))
