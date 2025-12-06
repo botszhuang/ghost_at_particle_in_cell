@@ -15,9 +15,9 @@ void print_test_particle ( test_particle_profile_struct * p ){
 
     for ( unsigned int i = 0 ; i < num ; i++ ) {
         fprintf( stdout, "\t%i) ", i );
-        fprintf( stdout, "\t%lf %lf %lf ,", i, X.x, X.y, X.z);
-        fprintf( stdout, "\t%lf %lf %lf ,", i, V.x, V.y, V.z);
-        fprintf( stdout, "\t%lf %lf %lf\n", i, F.x, F.y, F.z);
+        fprintf( stdout, "\t%lf %lf %lf ,", X.x, X.y, X.z);
+        fprintf( stdout, "\t%lf %lf %lf ,", V.x, V.y, V.z);
+        fprintf( stdout, "\t%lf %lf %lf\n", F.x, F.y, F.z);
     }
 
     #undef X

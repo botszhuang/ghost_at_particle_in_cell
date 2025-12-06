@@ -14,7 +14,7 @@ void get_context_and_queue( cl_gpu_profile_struct * a ){
     CL_CHECK (ret) ;
     
     #if defined(CL_VERSION_2_0) || (CL_VERSION_3_0)
-        OpenCL 2.0+ headers, preferred
+        //OpenCL 2.0+ headers, preferred
         const cl_queue_properties props[] = { 0 };
         a->queue = clCreateCommandQueueWithProperties(a->context, a->device_Ids[ index ], props, &ret);
     #else
