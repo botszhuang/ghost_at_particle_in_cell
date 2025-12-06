@@ -34,6 +34,8 @@ int main(){
     read_node ( cell ) ;
     print_node_in_cell ( cell ) ;
 
+    read_cell ( cell ) ;
+    print_node_index_of_cell ( cell ) ;
 
     
     setArg_for_kernel_leapfrog_step ( p , g , &t ) ;

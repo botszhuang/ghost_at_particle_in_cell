@@ -3,6 +3,7 @@ cl_h/*
 exe/*
 o/*
 .vscode/*
+output.log
 
 # Prerequisites
 *.d
