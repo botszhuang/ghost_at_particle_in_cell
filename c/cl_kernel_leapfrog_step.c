@@ -72,6 +72,8 @@ void run_kernel_leapfrog_step0( cl_gpu_profile_struct * g ){ launchKernel(k0) ; 
 void run_kernel_leapfrog_step1( cl_gpu_profile_struct * g ){ launchKernel(k1) ; }
 
 #undef launchKernel
-#undef kName
-#undef k
+#undef kName0
+#undef kName1
+#undef k0
+#undef k1
 #endif

@@ -26,7 +26,7 @@ cells = mesh.cells_dict['triangle']
 gmsh.finalize()
 
 # Save points (nodes) to text file
-np.savetxt("nodes.txt", points, fmt="%.6f", header="#NodeID: X Y", comments="")
+np.savetxt("nodes.txt", points, fmt="%.6f", header="# X Y", comments="")
 
 # Save cells (triangles) to text file
 # We add 1 to indices to use 1-based numbering (optional)

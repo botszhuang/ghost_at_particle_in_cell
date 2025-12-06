@@ -6,6 +6,7 @@
 
 #include <cl_gpu_tool.h>
 #include <cl_kernel.h>
+#include <cell_run.h>
 
 int main(){
 
@@ -23,12 +24,18 @@ int main(){
 
     t_type t = 0 ;
     test_particle_profile_struct * p ;
+    cell_profile_struct * cell = malloc ( sizeof ( cell [0] ) ) ;
 
     init_test_particle_mem  ( & p  ) ;
     init_test_particle_status ( p ) ;
-
     cl_init_test_particle_mem ( p , g );
-  
+
+
+    read_node ( cell ) ;
+    print_node_in_cell ( cell ) ;
+
+
+    
     setArg_for_kernel_leapfrog_step ( p , g , &t ) ;
     print_test_particle ( p ) ;
     
@@ -67,6 +74,7 @@ int main(){
     free_platform ( g );
     iffree ( g ) ;
 
+    free ( cell ) ;
     free_test_particle_mem ( p ) ;
 
     return EXIT_SUCCESS;
