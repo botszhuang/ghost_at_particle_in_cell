@@ -3,6 +3,7 @@
 
 #include <cl_gpu_profile_struct.h>
 #include <cl_erro_code.h>
+#include <test_particle_type.h>
 #include <cell_type.h>
 
 #define k ( g-> kernel_is_particle_in_cell )
@@ -18,12 +19,16 @@ void get_kernel_is_particle_in_cell ( cl_gpu_profile_struct * g ){
 void free_kernel_is_particle_in_cell( cl_gpu_profile_struct * g ){
     if ( k ) { CL_CHECK( clReleaseKernel ( k ) ); }
 }
-void setArg_for_kernel_is_particle_in_cell ( cell_profile_struct * c , cl_gpu_profile_struct * g ) {
+void setArg_for_kernel_is_particle_in_cell ( cell_profile_struct * c , 
+                                             test_particle_profile_struct * p ,
+                                             cl_gpu_profile_struct * g ) {
 
     clSetKernelArg( k , 0 , sizeof ( cl_mem )      , &( c->cl_node  ) );
     clSetKernelArg( k , 1 , sizeof ( c->nodeSize ) , &( c->nodeSize ) );
     clSetKernelArg( k , 2 , sizeof ( cl_mem )      , &( c->cl_cell  ) );
     clSetKernelArg( k , 3 , sizeof ( c->cellSize ) , &( c->cellSize ) );
+    clSetKernelArg( k , 4 , sizeof ( cl_mem )      , &( p->cl_x     ) );
+    clSetKernelArg( k , 5 , sizeof ( p->number   ) , &( p->number   ) );
     
 }                            
 

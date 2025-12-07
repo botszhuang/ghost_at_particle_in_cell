@@ -38,7 +38,7 @@ int main(){
 
     
     setArg_for_kernel_leapfrog_step ( p , g , &t ) ;
-    setArg_for_kernel_is_particle_in_cell ( cell , g ) ;
+    setArg_for_kernel_is_particle_in_cell ( cell , p , g ) ;
     print_test_particle ( p ) ;
     
     // write data to GPU
