@@ -17,12 +17,12 @@ void get_program ( cl_gpu_profile_struct * a ){
 
     //const char * source[] = { hello_world , leapfrog_step };
 
-    const char *hello_src  = _binary_cl_h_hello_world_cl_o_temp_null_start ;
-    const char *common_src = _binary_cl_h_c_and_cl_common_o_temp_null_start ;
-    const char *leap_src   = _binary_cl_h_leapfrog_step_cl_o_temp_null_start ;
-    const char *isPIC = _binary_cl_h_is_particle_in_cell_cl_o_temp_null_start ;
+    const char *hello  = _binary_cl_h_hello_world_cl_o_temp_null_start ;
+    const char *common = _binary_cl_h_c_and_cl_common_o_temp_null_start ;
+    const char *leap   = _binary_cl_h_leapfrog_step_cl_o_temp_null_start ;
+    const char *isPIC  = _binary_cl_h_is_particle_in_cell_cl_o_temp_null_start ;
 
-    const char *sources[] = { common_src , hello_src , leap_src , isPIC }; // Common source first for includes
+    const char *sources[] = { common , hello , leap , isPIC }; // Common source first for includes
     int num_sources = sizeof( sources ) / sizeof(sources[0]);
     
     cl_int ret = 0 ;

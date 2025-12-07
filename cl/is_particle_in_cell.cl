@@ -5,5 +5,5 @@ __kernel void is_particle_in_cell(
   , unsigned int          cellSize
 ){
     const int gid = get_global_id(0);
- 
+
 }
