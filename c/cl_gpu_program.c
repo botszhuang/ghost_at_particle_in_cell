@@ -29,8 +29,10 @@ void get_program ( cl_gpu_profile_struct * a ){
 
     a->program = clCreateProgramWithSource( a->context, num_sources , sources, NULL , &ret);
     CL_CHECK ( ret ) ;
+    
+    ret = clBuildProgram( a->program, 1, a->device_Ids , NULL, NULL, NULL) ;
 
-    CL_CHECK ( clBuildProgram( a->program, 1, a->device_Ids , NULL, NULL, NULL));
+    CL_BUILD_CHECK (ret,  a->program , a->device_Ids[0]) ;
     
 }
 void free_program ( cl_gpu_profile_struct *a ){ 

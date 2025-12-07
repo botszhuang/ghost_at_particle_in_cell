@@ -8,6 +8,8 @@
 
 #include <stdlib.h>
 
+#define cl_iffree(a) if (a) { clReleaseMemObject(a); a = NULL; }
+
 void get_platform_number_and_ids( cl_gpu_profile_struct * g ) ;
 void get_platform_info(  const cl_platform_id id ) ;
 void free_platform ( cl_gpu_profile_struct * g ) ;

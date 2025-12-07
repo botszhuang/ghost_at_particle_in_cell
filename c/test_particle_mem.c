@@ -4,6 +4,7 @@
 #include <cl_erro_code.h>
 #include <test_particle_type.h>
 #include <cl_gpu_profile_struct.h>
+#include <cl_gpu_tool.h>
 
 void init_test_particle_mem ( test_particle_profile_struct ** pPtr ){
 
@@ -54,7 +55,6 @@ void cl_init_test_particle_mem ( test_particle_profile_struct * p , cl_gpu_profi
 }
 void cl_free_test_particle_mem ( test_particle_profile_struct * p  ){
 
-    #define cl_iffree(a) if (a) { clReleaseMemObject(a); a = NULL; }
         
         cl_iffree ( p->cl_x ) ;
         cl_iffree ( p->cl_v ) ;
@@ -62,7 +62,6 @@ void cl_free_test_particle_mem ( test_particle_profile_struct * p  ){
         cl_iffree ( p->cl_m ) ; 
         cl_iffree ( p->cl_q ) ; 
 
-    #undef cl_iffree
 }
 
 #endif

@@ -16,6 +16,7 @@ typedef struct{
     cl_kernel kernel_hello_world ;
     cl_kernel kernel_leapfrog_step0 ;
     cl_kernel kernel_leapfrog_step1 ;
+    cl_kernel kernel_is_particle_in_cell ;
     
 }cl_gpu_profile_struct;
 

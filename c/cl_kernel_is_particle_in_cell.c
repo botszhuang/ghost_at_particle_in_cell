@@ -1,0 +1,43 @@
+#ifndef CL_KERNEL_IS_PARTICLE_IN_CELL_C
+#define CL_KERNEL_IS_PARTICLE_IN_CELL_C
+
+#include <cl_gpu_profile_struct.h>
+#include <cl_erro_code.h>
+#include <cell_type.h>
+
+#define k ( g-> kernel_is_particle_in_cell )
+#define kName ( "is_particle_in_cell" )
+
+void get_kernel_is_particle_in_cell ( cl_gpu_profile_struct * g ){
+
+    cl_int ret = 0 ;
+    k = clCreateKernel(g->program, kName, &ret);
+    CL_CHECK ( ret ) ;
+
+}
+void free_kernel_is_particle_in_cell( cl_gpu_profile_struct * g ){
+    if ( k ) { CL_CHECK( clReleaseKernel ( k ) ); }
+}
+void setArg_for_kernel_is_particle_in_cell ( cell_profile_struct * c , cl_gpu_profile_struct * g ) {
+
+    clSetKernelArg( k , 0 , sizeof ( cl_mem )      , &( c->cl_node  ) );
+    clSetKernelArg( k , 1 , sizeof ( c->nodeSize ) , &( c->nodeSize ) );
+    clSetKernelArg( k , 2 , sizeof ( cl_mem )      , &( c->cl_cell  ) );
+    clSetKernelArg( k , 3 , sizeof ( c->cellSize ) , &( c->cellSize ) );
+    
+}                            
+
+void run_kernel_is_paticle_in_cell( cl_gpu_profile_struct * g ){
+    const cl_uint work_dim = 1;
+    const size_t global_item_size = 5 ;
+    const size_t local_item_size = 1;
+    CL_CHECK( clEnqueueNDRangeKernel( g->queue, 
+                                      k , work_dim, NULL, 
+                                 &global_item_size, 
+                                 &local_item_size, 
+                                 0, NULL, NULL));
+}
+
+#undef kName
+#undef k
+#endif

@@ -7,11 +7,11 @@
 typedef struct{
   
   unsigned int    cellSize ;  
-  unsigned int  * cell  ;
+  cell_type  * cell  ;
   unsigned int    cellArrayLength ; //  cellArratLength = cellSize * 3
 
   unsigned int nodeSize ;
-  x_dim * node ;
+  node_type * node ;
 
   cl_mem cl_node ;
   cl_mem cl_cell ;

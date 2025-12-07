@@ -11,9 +11,6 @@
 #define k1 ( g-> kernel_leapfrog_step1 )
 #define kName1 ( "leapfrog_step1" )
 
-const cl_uint work_dim = 1;
-const size_t global_item_size = 5 ;
-const size_t local_item_size = 1;
 
 void get_kernel_leapfrog_step( cl_gpu_profile_struct * g ){
 
@@ -49,21 +46,13 @@ void setArg_for_kernel_leapfrog_step ( test_particle_profile_struct * p , cl_gpu
     
     #undef setArg
 }
-    // Provided by CL_VERSION_1_0
-    /*cl_int clEnqueueNDRangeKernel(
-        cl_command_queue command_queue,
-        cl_kernel kernel,
-        cl_uint work_dim,
-        const size_t* global_work_offset,
-        const size_t* global_work_size,
-        const size_t* local_work_size,
-        cl_uint num_events_in_wait_list,
-        const cl_event* event_wait_list,
-        cl_event* event);*/                             
-
+                          
 #define launchKernel(k){\
-  CL_CHECK( clEnqueueNDRangeKernel( g->queue, \
-                                      k0 , work_dim, NULL,  \
+    const cl_uint work_dim = 1;\
+    const size_t global_item_size = 5 ;\
+    const size_t local_item_size = 1;\
+    CL_CHECK( clEnqueueNDRangeKernel( g->queue, \
+                                      k , work_dim, NULL,  \
                                  &global_item_size, \
                                  &local_item_size, \
                                  0, NULL, NULL));\

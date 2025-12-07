@@ -5,18 +5,21 @@
 #include <stdio.h>
 
 #ifdef DEBUG
-    const char* clGetErrorString(cl_int ret);
 
-    static inline void CL_CHECK_FUNC( cl_int ret, const char * file, int line ) { 
-        
-        if ( ret == CL_SUCCESS ) { return; }
+    void CL_CHECK_FUNC1(cl_int ret, const char *file, int line);
+    void CL_BUILD_CHECK_sub(cl_int ret,
+                        cl_program program,
+                        cl_device_id device,
+                        const char *file,
+                        int line);
 
-        printf("OpenCL error %s (%d) at %s:%d\n", clGetErrorString(ret), ret, file, line);
-        exit ( EXIT_FAILURE );
-    }
+    #define CL_CHECK(ret) \
+        CL_CHECK_FUNC1((ret), __FILE__, __LINE__)
 
-    #define CL_CHECK(ret) CL_CHECK_FUNC((ret), __FILE__, __LINE__)
-        
+    #define CL_BUILD_CHECK(ret, program, device) \
+        CL_BUILD_CHECK_sub((ret), (program), (device), __FILE__, __LINE__)
+
+
 #else
     #define CL_CHECK(call) (void)(call)
 #endif

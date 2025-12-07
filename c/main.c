@@ -21,6 +21,7 @@ int main(){
     run_kernel_hello_world ( g ) ;
 
     get_kernel_leapfrog_step ( g ) ;
+    get_kernel_is_particle_in_cell ( g ) ;
 
     t_type t = 0 ;
     test_particle_profile_struct * p ;
@@ -37,6 +38,7 @@ int main(){
 
     
     setArg_for_kernel_leapfrog_step ( p , g , &t ) ;
+    setArg_for_kernel_is_particle_in_cell ( cell , g ) ;
     print_test_particle ( p ) ;
     
     // write data to GPU
@@ -48,9 +50,9 @@ int main(){
     host_to_gpu ( cell , g , node ) ;
     host_to_gpu ( cell , g , cell ) ;
 
+    run_kernel_is_paticle_in_cell ( g ) ;
     run_kernel_leapfrog_step0 ( g ) ;
     run_kernel_leapfrog_step1 ( g ) ;
-
 
     // Read data from GPU
     gpu_to_host ( p , g , x ) ;
@@ -63,7 +65,8 @@ int main(){
 
     // Clean up
     flush_and_finish_queue ( g ) ;
-    free_kernel_hello_world   ( g );
+    free_kernel_hello_world ( g );
+    free_kernel_is_particle_in_cell ( g ) ;
     free_kernel_leapfrog_step ( g );
     
     free_program  ( g );
