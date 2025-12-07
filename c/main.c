@@ -24,18 +24,16 @@ int main(){
 
     t_type t = 0 ;
     test_particle_profile_struct * p ;
-    cell_profile_struct * cell = malloc ( sizeof ( cell [0] ) ) ;
-
     init_test_particle_mem  ( & p  ) ;
     init_test_particle_status ( p ) ;
     cl_init_test_particle_mem ( p , g );
 
-
+    cell_profile_struct * cell = malloc ( sizeof ( cell [0] ) ) ;
     read_node ( cell ) ;
     print_node_in_cell ( cell ) ;
-
     read_cell ( cell ) ;
     print_node_index_of_cell ( cell ) ;
+    cl_cell_mem_init ( cell , g ) ;
 
     
     setArg_for_kernel_leapfrog_step ( p , g , &t ) ;
@@ -47,6 +45,8 @@ int main(){
     host_to_gpu ( p , g , F ) ;
     host_to_gpu ( p , g , m ) ;
     host_to_gpu ( p , g , q ) ;
+    host_to_gpu ( cell , g , node ) ;
+    host_to_gpu ( cell , g , cell ) ;
 
     run_kernel_leapfrog_step0 ( g ) ;
     run_kernel_leapfrog_step1 ( g ) ;
@@ -76,7 +76,7 @@ int main(){
     free_platform ( g );
     iffree ( g ) ;
 
-    free ( cell ) ;
+    free_cell_profile ( cell ) ;
     free_test_particle_mem ( p ) ;
 
     return EXIT_SUCCESS;
