@@ -32,7 +32,7 @@ void get_program ( cl_gpu_profile_struct * a ){
     
     ret = clBuildProgram( a->program, 1, a->device_Ids , NULL, NULL, NULL) ;
 
-    CL_BUILD_CHECK (ret,  a->program , a->device_Ids[0]) ;
+    CL_CHECK (ret,  a->program , a->device_Ids[0]) ;
     
 }
 void free_program ( cl_gpu_profile_struct *a ){ 

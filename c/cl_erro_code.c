@@ -3,6 +3,7 @@
 
 #include <cl_version.h>
 #include <stdio.h>
+#include <cl_erro_code.h>
 
 #define CASE_RET(x) case x: return #x;
 
@@ -82,10 +83,10 @@ const char* clGetErrorString(cl_int err)
     }
 }
 
-void print_cl_build_log(cl_program program, cl_device_id device)
+void print_cl_build_log(cl_program * program, cl_device_id * device)
 {
     size_t size = 0;
-    clGetProgramBuildInfo(program, device,
+    clGetProgramBuildInfo(* program, * device,
                           CL_PROGRAM_BUILD_LOG, 0, NULL, &size);
 
     if (!size) {
@@ -94,7 +95,7 @@ void print_cl_build_log(cl_program program, cl_device_id device)
     }
 
     char *log = malloc(size + 1);
-    clGetProgramBuildInfo(program, device,
+    clGetProgramBuildInfo(* program, * device,
                           CL_PROGRAM_BUILD_LOG, size, log, NULL);
     log[size] = '\0';
 
@@ -104,7 +105,7 @@ void print_cl_build_log(cl_program program, cl_device_id device)
     free(log);
 }
 
-void CL_CHECK_FUNC1(cl_int ret, const char *file, int line){
+void CL_CHECK1_func(cl_int ret, const char *file, int line){
     
     if (ret == CL_SUCCESS) { return; }
 
@@ -112,11 +113,13 @@ void CL_CHECK_FUNC1(cl_int ret, const char *file, int line){
     exit(EXIT_FAILURE);
 }
 
-void CL_BUILD_CHECK_sub(cl_int ret, cl_program program, cl_device_id device, const char *file, int line){
+void CL_CHECK3_func(cl_int ret, void *a , void * b , const char *file, int line){
     
     if (ret == CL_SUCCESS) { return; }
 
-    if (ret == CL_BUILD_PROGRAM_FAILURE) { print_cl_build_log(program, device); }
+    if (ret == CL_BUILD_PROGRAM_FAILURE) { 
+        print_cl_build_log( ( cl_program *) a  , ( cl_device_id * ) b  ); 
+    }
 
     printf("OpenCL error %s (%d) at %s:%d\n", clGetErrorString(ret), ret, file, line);
     exit(EXIT_FAILURE);
