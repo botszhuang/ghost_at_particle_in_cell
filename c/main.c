@@ -51,8 +51,8 @@ int main(){
     host_to_gpu ( cell , g , cell ) ;
 
     run_kernel_is_paticle_in_cell ( g ) ;
-    run_kernel_leapfrog_step0 ( g ) ;
-    run_kernel_leapfrog_step1 ( g ) ;
+    //run_kernel_leapfrog_step0 ( g ) ;
+    //run_kernel_leapfrog_step1 ( g ) ;
 
     // Read data from GPU
     gpu_to_host ( p , g , x ) ;
