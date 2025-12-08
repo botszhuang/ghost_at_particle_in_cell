@@ -36,5 +36,5 @@ for i, (x, y) in enumerate(nodes):
 plt.xlabel('x')
 plt.ylabel('y')
 plt.axis('equal')
+plt.savefig("particle_incell_.png")
 plt.show()
-
