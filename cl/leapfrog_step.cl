@@ -28,8 +28,8 @@ __kernel void leapfrog_step0(
 
         // Leapfrog step#1
         v += ( a * half_dt ) ; // half-step velocity
-        x += ( v * dt ) ;          // full-step position
-    
+        //x += ( v * dt ) ;          // full-step position
+        x.xy += ( v.xy * dt ) ; 
         xPtr [ i ] = x ;
         vPtr [ i ] = v ;
 

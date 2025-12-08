@@ -31,9 +31,9 @@ int main(){
 
     cell_profile_struct * cell = malloc ( sizeof ( cell [0] ) ) ;
     read_node ( cell ) ;
-    print_node_in_cell ( cell ) ;
+    //print_node_in_cell ( cell ) ;
     read_cell ( cell ) ;
-    print_node_index_of_cell ( cell ) ;
+    //print_node_index_of_cell ( cell ) ;
     cl_cell_mem_init ( cell , g ) ;
 
     

@@ -8,8 +8,9 @@ void print_node_in_cell ( cell_profile_struct * c ) {
 
     for ( unsigned int i = 0 ; i < c->nodeSize ; i++ ) {
         #define X (c->node[i])
-        printf ("node [%i] ( %.6lf, %.6lf, %.6lf )\n", 
-            i , X.x , X.y , X.z ) ;
+        printf ("node [%i] ", i ) ;
+        twoDprintf ( X ) ;
+            
     }
 
 }

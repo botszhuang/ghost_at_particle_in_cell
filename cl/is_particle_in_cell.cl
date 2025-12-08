@@ -1,4 +1,38 @@
-#define geometric_vector(p,v1,v2) ( cross((v2-v1), (p-v1)) )
+
+#define CROSS2(a,b) (((a).x)*((b).y) - (((a).y)*((b).x))) // z-component of 2D cross
+
+inline bool point_in_triangle ( double2 A, double2 B, double2 C, double2 P ) {
+    
+    double2 v , p;
+/*
+    double2 AB = B - A;
+    double2 BC = C - B;
+    double2 CA = A - C;
+
+    double2 AP = P - A;
+    double2 BP = P - B;
+    double2 CP = P - C;
+*/
+    v = B - A ;
+    p = P - A ;
+    double z1 = CROSS2( v , p );
+
+    v = C - B ;
+    p = P - B ;
+    double z2 = CROSS2( v , p );
+
+    v = A - C ;
+    p = P - C ;
+    double z3 = CROSS2( v , p );
+
+
+    // Inside if all cross products have the same sign (or zero)
+    // 1 -> true  -> P is inside the triangle
+    // 0 -> false -> P is outside the triangle
+    return ((z1 >= 0.0f && z2 >= 0.0f && z3 >= 0.0f) || // true
+            (z1 <= 0.0f && z2 <= 0.0f && z3 <= 0.0f));  // false
+            
+}
 
 __kernel void is_particle_in_cell(
     __global node_type *  nodePtr
@@ -9,68 +43,57 @@ __kernel void is_particle_in_cell(
   , unsigned int          particleSize
   , __global cell_index_type * cell_index_of_p_Ptr
 ){
-    const int gid = get_global_id(0);
-    const int gid_size = get_global_size(0);
- 
+    const int gid0 = get_global_id(0);
+    const int gid1 = get_global_id(1);
+
+    const int gid0_size = get_global_size(0);
+    const int gid1_size = get_global_size(1);
+
     unsigned int cell_index = 0 ;
     cell_type n1, n2, n3 ;
 
-    for ( unsigned int i = gid ; i < cellSize ; i += gid_size  ){
+   /*for ( unsigned int i = gid ; i < cellSize ; i += gid_size  ){
 
       cell_index = i * 3 ; 
       n1 = cellPtr [ cell_index ] ;
       n2 = cellPtr [ cell_index +1 ] ;
       n3 = cellPtr [ cell_index +2 ] ;
-      printf ( "%i) %d %d %d\n" ,  i , n1 , n2 , n3  ) ;
+      printf ( "g, %i) %d %d %d\n" ,  i , n1 , n2 , n3  ) ;
 
-    }
+    }*/
 
-    x_dim X ;
+    /*x_dim X ;
     for ( unsigned int i = gid ; i < nodeSize ; i += gid_size  ){
 
       X = nodePtr [ i ] ;
-      printf ( "g, node %i) %.3lf %.3lf %.3lf\n" ,  i , X.x , X.y , X.z  ) ;
+      printf ( "g, node %i) %.3lf %.3lf \n" ,  i , X.x , X.y ) ;
 
-    }
+    }*/
     
 
-    x_dim p ;
-    x_dim A , B , C ;
-    x_dim c1 , c2 , c3 , N ;
-    double s1 , s2 , s3 ;
-
-    // get a triangle & its nodes' index
-    //unsigned int 
-    cell_index = 0 ; 
-    n1 = cellPtr [ cell_index    ] ;
-    n2 = cellPtr [ cell_index +1 ] ;
-    n3 = cellPtr [ cell_index +2 ] ;
-
-    for ( unsigned int i = gid ; i < particleSize ; i += gid_size  ){
-
-      p = particle [ i ] ;
+    double2 A , B , C , P ;
+    bool y ;
+    for ( unsigned int ci = gid1 ; ci < cellSize ; ci += gid1_size  ) {
+      // get a triangle & its nodes' index
+      //unsigned int 
+      cell_index = ci * 3 ; 
+      n1 = cellPtr [ cell_index    ] ;
+      n2 = cellPtr [ cell_index +1 ] ;
+      n3 = cellPtr [ cell_index +2 ] ;
 
       // get the nodes' position ( x, y, z ) for the index of node
-      A = nodePtr [ n1 ] ;
-      B = nodePtr [ n2 ] ;
-      C = nodePtr [ n3 ] ;
+      A = nodePtr [ n1 ] ; 
+      B = nodePtr [ n2 ] ; 
+      C = nodePtr [ n3 ] ; 
 
-      N  = cross ( ( B - A ) , ( C - A ) ) ;
-      c1 = cross ( ( B - A ) , ( p - A ) ) ;
-      c2 = cross ( ( C - B ) , ( p - B ) ) ;
-      c3 = cross ( ( A - C ) , ( p - C ) ) ;
-      
-      s1 = dot ( c1 , N ) ; 
-      s2 = dot ( c2 , N ) ; 
-      s3 = dot ( c3 , N ) ; 
+      for ( unsigned int pi = gid0 ; pi < particleSize ; pi += gid0_size  ){
 
-      printf ( "[%2i] cell: %.2lf %.2lf %.2lf\t%.2lf %.2lf %.2lf\t%.2lf %.2lf %.2lf\t particle: %.2lf %.2lf %.2lf\n" , 
-       i, A.x , A.y , A.z, 
-       B.x , B.y , B.z , 
-       C.x , C.y , C.z ,
-       p.x , p.y , p.z ) ;
+        P = particle [ pi ] ;
 
-
+        y = point_in_triangle ( A , B , C , P ) ;
+        if ( y ) { printf ( "p[%i] is inside cell[%i]\n"  , pi , ci ) ; }
+            else { printf ( "p[%i] is outside cell[%i]\n" , pi , ci ) ; }
+      }
     }
 
 }

@@ -36,14 +36,14 @@ void setArg_for_kernel_is_particle_in_cell ( cell_profile_struct * c ,
 }                            
 
 void run_kernel_is_paticle_in_cell( cl_gpu_profile_struct * g ){
-    const cl_uint work_dim = 1;
-    const size_t global_item_size = 64 ;
-    const size_t local_item_size = 32 ; // Must be a divisor of global_item_size
+    const cl_uint work_dim = 2;
+    const size_t global_item_size [ 2 ] = { 64 , 64 } ;
+    const size_t local_item_size  [ 2 ] = { 8 , 8 } ; // Must be a divisor of global_item_size
     //Number of Work-Groups = global_work_size / local_work_size
     CL_CHECK( clEnqueueNDRangeKernel( g->queue, 
                                       k , work_dim, NULL, 
-                                 &global_item_size, 
-                                 &local_item_size, 
+                                 global_item_size, 
+                                 local_item_size, 
                                  0, NULL, NULL));
 }
 

@@ -57,7 +57,7 @@ void read_node ( cell_profile_struct * c ) {
     x_dim X ;
     unsigned int counter = 0  ;
     while ( fscanf ( fp , "%lf %lf", &X.x, &X.y ) == 2) {
-        X.z = 0 ;
+        //X.z = 0 ;
         List0 [ counter ] = X ;
         counter ++ ;
         x_dim * tmp ;
