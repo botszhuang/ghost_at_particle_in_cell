@@ -5,8 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef DEBUG
     void print_cl_build_log( cl_program program, cl_device_id device ) ;
+
+#ifdef DEBUG
     const char* clGetErrorString(cl_int err) ;
 
     static inline void CL_CHECK_FUNC( cl_int ret, const char * file, int line ) { 
