@@ -2,20 +2,21 @@
 #define TEST_PARTICLE_MEM_C
 #include <c_tool.h>
 #include <cl_erro_code.h>
-#include <test_particle_type.h>
+#include <read_data.h>
 #include <cl_gpu_profile_struct.h>
 #include <cl_gpu_tool.h>
 
 void init_test_particle_mem ( test_particle_profile_struct ** pPtr ){
 
     * pPtr = calloc ( 1 , sizeof ( * pPtr[0] ) ) ;
+    
     test_particle_profile_struct * p = * pPtr ;
    
-    p->number = 5 ;
+    read_points ( p ) ;
 
     #define mallocP(a) ( malloc( p->number * sizeof ( (a)[ 0 ] ) )) 
     
-    p->x = mallocP( p->x ) ; 
+    //p->x = mallocP( p->x ) ; 
     p->v = mallocP( p->v ) ;
     p->F = mallocP( p->F ) ;
     p->m = mallocP( p->m ) ;

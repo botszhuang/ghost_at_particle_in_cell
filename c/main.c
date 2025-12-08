@@ -7,6 +7,7 @@
 #include <cl_gpu_tool.h>
 #include <cl_kernel.h>
 #include <cell_run.h>
+#include <read_data.h>
 
 int main(){
 
@@ -28,6 +29,7 @@ int main(){
     init_test_particle_mem  ( & p  ) ;
     init_test_particle_status ( p ) ;
     cl_init_test_particle_mem ( p , g );
+    print_test_particle ( p ) ;
 
     cell_profile_struct * cell = malloc ( sizeof ( cell [0] ) ) ;
     read_node ( cell ) ;
@@ -39,7 +41,6 @@ int main(){
     
     setArg_for_kernel_leapfrog_step ( p , g , &t ) ;
     setArg_for_kernel_is_particle_in_cell ( cell , p , g ) ;
-    print_test_particle ( p ) ;
     
     // write data to GPU
     host_to_gpu ( p , g , x ) ;

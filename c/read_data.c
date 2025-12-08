@@ -4,9 +4,10 @@
 #include <stdio.h>
 #include <cl_erro_code.h>
 #include <c_tool.h>
-#include <cell_type.h>
 #include <cl_gpu_profile_struct.h>
+#include <read_data.h>
 
+#define fPointFile  "points.csv"
 #define fNodeFile  "nodes.txt"
 #define fCellFile  "elements.txt"
 
@@ -38,9 +39,38 @@
 #define openF(fp, fn) {\
     fp = fopen(fn, "r");\
     if (!fp) {\
-        printf("Error opening file %s at %s, line %d\n", fNodeFile, __FILE__, __LINE__);\
+        printf("Error opening file %s at func:%s at %s, line %d\n", fn, __func__ , __FILE__, __LINE__);\
         exit(EXIT_FAILURE);\
     }\
+}
+void read_points ( test_particle_profile_struct * c ) {
+
+    printf ( "reading %s ...\n", fPointFile ) ;
+
+    FILE * fp ;
+    openF( fp , fPointFile ) ;
+    skipTheHead( fp );
+
+    // reading the data from text file
+    unsigned int ListSize = 30 ;
+    x_dim * List0 = malloc ( ListSize * sizeof( List0 [0] ) )  ;
+    x_dim X ;
+    unsigned int counter = 0  ;
+    while ( fscanf ( fp , "%lf, %lf", &X.x, &X.y ) == 2) {
+        //X.z = 0 ;
+        List0 [ counter ] = X ;
+        counter ++ ;
+        x_dim * tmp ;
+        rellocation( List0 , ListSize , counter , 100 , tmp ) ;
+    }
+
+    fclose ( fp );
+
+    // update particle's
+    c->number = counter ;
+    c->x = realloc ( List0 , c->number * sizeof ( c->x [0] ) ) ;
+    checkCellNode(c->x) ;
+
 }
 
 void read_node ( cell_profile_struct * c ) {
