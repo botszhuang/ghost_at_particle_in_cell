@@ -21,5 +21,6 @@
 #define q_type double
 #define test_particle_number_type unsigned int
 #define cell_type unsigned int
+#define cell_index_type unsigned int
 
 #define dt 0.1

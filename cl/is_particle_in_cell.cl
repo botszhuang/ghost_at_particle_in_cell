@@ -7,6 +7,7 @@ __kernel void is_particle_in_cell(
   , unsigned int          cellSize
   , __global x_dim *      particle
   , unsigned int          particleSize
+  , __global cell_index_type * cell_index_of_p_Ptr
 ){
     const int gid = get_global_id(0);
     const int gid_size = get_global_size(0);

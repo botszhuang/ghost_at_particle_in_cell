@@ -34,14 +34,14 @@ __kernel void leapfrog_step0(
         vPtr [ i ] = v ;
 
   
-    printf("HELLO!\n") ;
+    /*printf("HELLO!\n") ;
     xPtr[i].x += 5 ; 
     printf("HELLO! %i, %.2lf %.2lf %.2lf,\t%.2lf %.2lf %.2lf,\t%.2lf %.2lf %.2lf,\t%.2lf %.2lf\n",
                   i, xPtr[i].x, xPtr[i].y, xPtr[i].z
                   , vPtr[i].x, vPtr[i].y, vPtr[i].z
                   , FPtr[i].x, FPtr[i].y, FPtr[i].z
                   , mPtr[i] , qPtr[i]
-                  ) ;
+                  ) ;*/
     }
 }
 
@@ -72,14 +72,14 @@ __kernel void leapfrog_step1(
         vPtr [ i ] = v ;
 
   
-    printf("HELLO!\n") ;
+    /*printf("HELLO!\n") ;
     xPtr[i].x += 5 ; 
     printf("HELLO! %i, %.2lf %.2lf %.2lf,\t%.2lf %.2lf %.2lf,\t%.2lf %.2lf %.2lf,\t%.2lf %.2lf\n",
                   i, xPtr[i].x, xPtr[i].y, xPtr[i].z
                   , vPtr[i].x, vPtr[i].y, vPtr[i].z
                   , FPtr[i].x, FPtr[i].y, FPtr[i].z
                   , mPtr[i] , qPtr[i]
-                  ) ;
+                  ) ;*/
     }    
 }
 #undef aFunc

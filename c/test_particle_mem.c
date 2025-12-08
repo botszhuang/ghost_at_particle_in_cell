@@ -52,6 +52,11 @@ void cl_init_test_particle_mem ( test_particle_profile_struct * p , cl_gpu_profi
     createBuffer ( q ) ;   CL_CHECK ( ret );
 
     #undef createBuffer
+
+    // no mem at host
+    p->cl_cell_index_bytes = p->number * sizeof ( cell_index_type ) ;
+    p->cl_cell_index = clCreateBuffer( g->context, CL_MEM_READ_WRITE, p->cl_cell_index_bytes , NULL , &ret ) ; CL_CHECK ( ret ) ;
+
 }
 void cl_free_test_particle_mem ( test_particle_profile_struct * p  ){
 
@@ -61,6 +66,7 @@ void cl_free_test_particle_mem ( test_particle_profile_struct * p  ){
         cl_iffree ( p->cl_F ) ; 
         cl_iffree ( p->cl_m ) ; 
         cl_iffree ( p->cl_q ) ; 
+        cl_iffree ( p->cl_cell_index ) ;
 
 }
 

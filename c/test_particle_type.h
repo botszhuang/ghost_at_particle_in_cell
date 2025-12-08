@@ -20,12 +20,14 @@ typedef struct{
   cl_mem cl_F ;
   cl_mem cl_m ;
   cl_mem cl_q ;
+  cl_mem cl_cell_index ;
 
   unsigned int cl_x_total_bytes ;
   unsigned int cl_v_total_bytes ;
   unsigned int cl_F_total_bytes ;
   unsigned int cl_m_total_bytes ;
   unsigned int cl_q_total_bytes ;
+  unsigned int cl_cell_index_bytes ;
 
 } test_particle_profile_struct ;
 

@@ -22,13 +22,16 @@ void free_kernel_is_particle_in_cell( cl_gpu_profile_struct * g ){
 void setArg_for_kernel_is_particle_in_cell ( cell_profile_struct * c , 
                                              test_particle_profile_struct * p ,
                                              cl_gpu_profile_struct * g ) {
+    
+    const unsigned int sizeof_cl_meme = sizeof ( cl_mem ) ;
 
-    clSetKernelArg( k , 0 , sizeof ( cl_mem )      , &( c->cl_node  ) );
+    clSetKernelArg( k , 0 , sizeof_cl_meme         , &( c->cl_node  ) );
     clSetKernelArg( k , 1 , sizeof ( c->nodeSize ) , &( c->nodeSize ) );
-    clSetKernelArg( k , 2 , sizeof ( cl_mem )      , &( c->cl_cell  ) );
+    clSetKernelArg( k , 2 , sizeof_cl_meme         , &( c->cl_cell  ) );
     clSetKernelArg( k , 3 , sizeof ( c->cellSize ) , &( c->cellSize ) );
-    clSetKernelArg( k , 4 , sizeof ( cl_mem )      , &( p->cl_x     ) );
+    clSetKernelArg( k , 4 , sizeof_cl_meme         , &( p->cl_x     ) );
     clSetKernelArg( k , 5 , sizeof ( p->number   ) , &( p->number   ) );
+    clSetKernelArg( k , 6 , sizeof_cl_meme         , &( p->cl_cell_index  ) );
     
 }                            
 
