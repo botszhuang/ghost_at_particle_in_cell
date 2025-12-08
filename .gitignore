@@ -5,6 +5,8 @@ o/*
 .vscode/*
 output.log
 myrsync.sh
+*.txt
+*.csv
 
 # Prerequisites
 *.d

@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "ghost_at_particle_in_cell",
+			"path": "."
+		}
+	],
+	"settings": {
+		"makefile.configureOnOpen": false
+	}
+}

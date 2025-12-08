@@ -42,9 +42,15 @@ for tri in cells:
     tri_points = points[tri]
     # Close the triangle for plotting
     tri_points = np.vstack([tri_points, tri_points[0]])
-    plt.plot(tri_points[:,0], tri_points[:,1], color='#FF5733', linestyle='-')  # black lines
+    plt.plot(tri_points[:,0], tri_points[:,1], color="#F0BBAF", linestyle='-')  
 
-plt.scatter(points[:,0], points[:,1], color='red', s=10)  # nodes
+#node
+plt.scatter(points[:,0], points[:,1], color="#DDAE70" , s=300 , zorder = 5 )  # nodes
+# Add node indices
+for i, (x, y) in enumerate(points):
+    plt.text(x, y, str(i), color="#683D07" , fontsize=10,
+             ha='center', va='center', zorder=6)  # place label slightly above point
+
 plt.gca().set_aspect('equal')
 plt.xlabel('X')
 plt.ylabel('Y')

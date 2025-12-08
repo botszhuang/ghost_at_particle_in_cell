@@ -1,6 +1,16 @@
 
 #define CROSS2(a,b) (((a).x)*((b).y) - (((a).y)*((b).x))) // z-component of 2D cross
-
+#define getCellNodesPosition(A,B,C,ci){\
+      /* get a triangle & its nodes' index*/\
+      cell_index = ci * 3 ; \
+      n1 = cellPtr [ cell_index    ] ;\
+      n2 = cellPtr [ cell_index +1 ] ;\
+      n3 = cellPtr [ cell_index +2 ] ;\
+      /* get the nodes' position ( x, y, z ) for the index of node*/\
+      A = nodePtr [ n1 ] ; \
+      B = nodePtr [ n2 ] ; \
+      C = nodePtr [ n3 ] ; \
+}
 inline bool point_in_triangle ( double2 A, double2 B, double2 C, double2 P ) {
     
     double2 v , p;
@@ -49,6 +59,7 @@ __kernel void is_particle_in_cell(
     const int gid0_size = get_global_size(0);
     const int gid1_size = get_global_size(1);
 
+    /*These are required variables for getCellNodesPosition() */
     unsigned int cell_index = 0 ;
     cell_type n1, n2, n3 ;
 
@@ -71,20 +82,12 @@ __kernel void is_particle_in_cell(
     }*/
     
 
-    double2 A , B , C , P ;
+    x_dim A , B , C ; // vortex of traingle
+    x_dim P ; // point
     bool y ;
     for ( unsigned int ci = gid1 ; ci < cellSize ; ci += gid1_size  ) {
-      // get a triangle & its nodes' index
-      //unsigned int 
-      cell_index = ci * 3 ; 
-      n1 = cellPtr [ cell_index    ] ;
-      n2 = cellPtr [ cell_index +1 ] ;
-      n3 = cellPtr [ cell_index +2 ] ;
-
-      // get the nodes' position ( x, y, z ) for the index of node
-      A = nodePtr [ n1 ] ; 
-      B = nodePtr [ n2 ] ; 
-      C = nodePtr [ n3 ] ; 
+      
+      getCellNodesPosition ( A , B , C , ci );
 
       for ( unsigned int pi = gid0 ; pi < particleSize ; pi += gid0_size  ){
 
