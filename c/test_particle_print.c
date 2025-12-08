@@ -14,11 +14,11 @@ void print_test_particle ( test_particle_profile_struct * p ){
     #define F (p->F[i])
 
     for ( unsigned int i = 0 ; i < num ; i++ ) {
-        printf( "\t%i) ", i );
-        twoDprintf   ( X ) ;
-        threeDprintf ( V ) ;
-        threeDprintf ( F ) ;
-        printf( "\t%.2lf %.2lf\n", p->m[i], p->q[i] );
+        printf( "[%i]\n", i );
+        printf("  x"); x_dim_printf ( X , i ) ;
+        printf("  v"); v_dim_printf ( V , i ) ;
+        printf("  F"); F_dim_printf ( F , i ) ;
+        printf( "  m=%.2lf\n  q=%.2lf\n", p->m[i], p->q[i] );
     }
 
     #undef X

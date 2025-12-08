@@ -6,28 +6,12 @@
 #include <c_tool.h>
 #include <cl_gpu_profile_struct.h>
 #include <read_data.h>
+#include <string.h>
 
 #define fPointFile  "points.csv"
-#define fNodeFile  "nodes.txt"
-#define fCellFile  "elements.txt"
+#define fNodeFile  "nodes.csv"
+#define fCellFile  "triangles.csv"
 
-#define rellocation(p,pSize,counter,extra, tmp) {\
-    if ( counter == pSize ) {\
-        pSize += extra ;\
-        tmp = realloc( p, pSize * sizeof( p[0] ) );\
-        if (!tmp) {\
-            printf ( "realloc failed %s, %d" , __FILE__ , __LINE__  );\
-            iffree(p);  \
-            fclose(fp);\
-            exit(EXIT_FAILURE);\
-    }\
-    p = tmp ;    \
-    }\
-}
-#define skipTheHead(fp){\
-    char header[100];\
-    fgets(header, sizeof(header), fp);  \
-}
 #define checkCellNode(a) {\
     if (!a) {\
         printf("realloc failed for ##a @ %s %d", __FILE__, __LINE__ );\
@@ -36,110 +20,114 @@
         exit(EXIT_FAILURE);\
     }\
 }
-#define openF(fp, fn) {\
-    fp = fopen(fn, "r");\
-    if (!fp) {\
-        printf("Error opening file %s at func:%s at %s, line %d\n", fn, __func__ , __FILE__, __LINE__);\
-        exit(EXIT_FAILURE);\
-    }\
-}
-void read_points ( test_particle_profile_struct * c ) {
 
-    printf ( "reading %s ...\n", fPointFile ) ;
-
-    FILE * fp ;
-    openF( fp , fPointFile ) ;
-    skipTheHead( fp );
-
-    // reading the data from text file
-    unsigned int ListSize = 30 ;
-    x_dim * List0 = malloc ( ListSize * sizeof( List0 [0] ) )  ;
-    x_dim X ;
-    unsigned int counter = 0  ;
-    while ( fscanf ( fp , "%lf, %lf", &X.x, &X.y ) == 2) {
-        //X.z = 0 ;
-        List0 [ counter ] = X ;
-        counter ++ ;
-        x_dim * tmp ;
-        rellocation( List0 , ListSize , counter , 100 , tmp ) ;
+static inline void examfopen(FILE *fp, const char *fn){
+        if (!fp) {
+        printf("Error opening file %s at func:%s at %s, line %d\n", fn, __func__ , __FILE__, __LINE__);
+        exit(EXIT_FAILURE);
     }
+}
+static inline void skipCSVhead( FILE * fp ) {
+    char header[200];
+    fgets(header, sizeof(header), fp);
+}
+static inline unsigned int rellocation_func ( void ** p , size_t pSize, const size_t counter ,  const size_t element_size ) {
+    if ( counter < pSize ) { return pSize ; }
+    
+        pSize += 100 ;
+        void * tmp = realloc( *p, ( pSize * element_size ) );
+        if ( ! tmp ) {\
+            printf ( "realloc failed %s, %d" , __FILE__ , __LINE__  );
+            iffree(p);  
+            exit(EXIT_FAILURE);
+        }
+         * p = tmp ;
+        return pSize ;
+    
+}
+
+static inline void read_x_dim_CSV ( const char * filename , x_dim ** lflf_array , unsigned int * lflf_size ) {
+
+    printf ( "reading %s ...\n", filename ) ;
+
+    FILE * fp = fopen( filename , "r");
+    examfopen( fp , filename ) ;
+    skipCSVhead( fp );
+
+    // reading CSV file
+    x_dim X ;
+    const unsigned int sizeofElement = sizeof( X ) ;
+    unsigned int ListSize = 30 ;
+    x_dim * List0 = malloc ( ListSize * sizeofElement  )  ;
+    unsigned int counter = 0  ;
+    
+    while ( fscanf ( fp , "%lf,%lf", &X.x, &X.y ) == 2) {
+        //ist0 [ counter ] = X ;
+        memcpy( List0 + counter , &X , sizeofElement );
+        counter ++ ;
+        ListSize = rellocation_func( (void **)&List0 , ListSize , counter , sizeofElement ) ;
+    }
+    // end of reading CSV file
 
     fclose ( fp );
 
-    // update particle's
-    c->number = counter ;
-    c->x = realloc ( List0 , c->number * sizeof ( c->x [0] ) ) ;
+    // update output
+    *lflf_size  = counter ;
+    *lflf_array = realloc ( List0 , counter * sizeofElement ) ;
+
+}
+static inline void read_3int_CSV  ( const char * filename , triangleStruct ** int3_array   , unsigned int * int3_size ) {
+
+    printf ( "reading %s ...\n", filename ) ;
+
+    FILE * fp = fopen( filename , "r");
+    examfopen( fp , filename ) ;
+    skipCSVhead( fp );  
+
+    // reading CSV file
+    triangleStruct X ;
+    const unsigned int sizeofElement = sizeof( X ) ;
+    unsigned int ListSize = 30 ;
+    triangleStruct * List0 = malloc ( ListSize * sizeofElement  )  ;
+    unsigned int counter = 0  ;
+    
+    while ( fscanf ( fp , "%d,%d,%d", &X.x, &X.y, &X.z ) == 3) {
+        memcpy( List0 + counter , &X , sizeofElement );
+        //memcpy List0 [ counter ] = X ;
+        counter ++ ;
+        ListSize = rellocation_func( (void **)&List0 , ListSize , counter , sizeofElement ) ;
+    }
+    // end of reading CSV file
+
+    fclose ( fp );
+
+    // update output
+    *int3_size  = counter ;
+    *int3_array = realloc ( List0 , counter * sizeofElement ) ;
+
+}
+
+void read_points ( test_particle_profile_struct * c ) {
+       
+    read_x_dim_CSV ( fPointFile , &( c->x ) , &( c->number ) ) ;
     checkCellNode(c->x) ;
 
 }
-
 void read_node ( cell_profile_struct * c ) {
 
-    printf ( "reading %s ...\n", fNodeFile ) ;
-
-    FILE * fp ;
-    openF( fp , fNodeFile ) ;
-    skipTheHead( fp );
-
-    // reading the data from text file
-    unsigned int ListSize = 30 ;
-    x_dim * List0 = malloc ( ListSize * sizeof( List0 [0] ) )  ;
-    x_dim X ;
-    unsigned int counter = 0  ;
-    while ( fscanf ( fp , "%lf %lf", &X.x, &X.y ) == 2) {
-        //X.z = 0 ;
-        List0 [ counter ] = X ;
-        counter ++ ;
-        x_dim * tmp ;
-        rellocation( List0 , ListSize , counter , 100 , tmp ) ;
-    }
-
-    fclose ( fp );
-
-    // update cell's profile
-    c->nodeSize = counter ;
-    c->node = realloc ( List0 , c->nodeSize * sizeof ( c->node [0] ) ) ;
+    read_x_dim_CSV ( fNodeFile , &( c->node ) , &( c->nodeSize ) ) ;
     checkCellNode(c->node) ;
 
 }
-
 void read_cell ( cell_profile_struct * c ) {
 
-    printf ( "reading %s ...\n", fCellFile ) ;
-
-    FILE * fp ;
-    openF( fp , fCellFile ) ;
-    skipTheHead( fp );
-
-    unsigned int ListSize  = 10 *3  ;
-    unsigned int * List = calloc ( 30 , sizeof ( List [0] ) ) ;
-
-    // reading the data from text file
-    unsigned int X0 , X1 , X2 ;
-    unsigned int counter = 0  ;
-    while ( fscanf ( fp , "%d %d %d", &X0 , &X1 , &X2 ) == 3) {    
-        List [  counter     ] = X0 ;  
-        List [  counter +1  ] = X1 ;  
-        List [  counter +2  ] = X2 ;
-        counter +=3 ;  
-        unsigned int * tmp ;
-        rellocation( List , ListSize , counter , 100*3 , tmp ) ;
-    }
-
-    fclose ( fp );
-
-    // update cell's profile
-    c->cellArrayLength = counter ;
-    c->cellSize = c->cellArrayLength / 3 ;
-    c->cell = realloc( List , c->cellArrayLength * sizeof( c->cell [0] ));  // Final reallocation for cells
-    checkCellNode(c->cell);  // Check if reallocation succeeded
+    read_3int_CSV ( fCellFile , (triangleStruct **)&( c->cell ) , &( c->cellSize ) ) ;
+    //checkCellNode(c->cell);  // Check if reallocation succeeded
 
 }
 
-#undef openF
-#undef checkCellNode 
-#undef rellocation
-#undef skipTheHead
 #undef fNodeFile
+#undef fCellFile
+#undef fPointFile
 
 #endif

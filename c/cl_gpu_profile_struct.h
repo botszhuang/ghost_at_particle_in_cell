@@ -5,7 +5,7 @@
 
 typedef struct{
     unsigned int platform_id_num ;
-    cl_platform_id * platform_Ids ;                                
+    cl_platform_id platform_Ids ;                                
 
     unsigned int device_number ;
     cl_device_id * device_Ids ;

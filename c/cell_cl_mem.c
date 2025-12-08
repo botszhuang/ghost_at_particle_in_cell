@@ -15,9 +15,9 @@ void cl_cell_mem_init ( cell_profile_struct * c ,
     cl_int ret = 0 ;
 
     c->cl_node_total_bytes = c->nodeSize * sizeof ( c->node [0] ) ;
-    c->cl_cell_total_bytes = c->cellArrayLength * sizeof ( c->cell [0] ) ;
+    c->cl_cell_total_bytes = c->cellSize * sizeof ( c->cell [0] ) ;
 
-    #define createBuffer(name){\
+    #define createBuffer(name){ \
         c->cl_##name = clCreateBuffer(\
                     g->context,\
                     CL_MEM_READ_WRITE,\

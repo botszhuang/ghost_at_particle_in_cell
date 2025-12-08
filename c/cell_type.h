@@ -7,8 +7,7 @@
 typedef struct{
   
   unsigned int    cellSize ;  
-  cell_type  * cell  ;
-  unsigned int    cellArrayLength ; //  cellArratLength = cellSize * 3
+  triangleStruct * cell  ;
 
   unsigned int nodeSize ;
   node_type * node ;

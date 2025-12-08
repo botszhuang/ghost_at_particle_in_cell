@@ -14,7 +14,6 @@ int main(){
   
     cl_gpu_profile_struct * g = calloc ( 1 , sizeof ( cl_gpu_profile_struct ) )  ;   
     get_platform_number_and_ids ( g ) ;                                
-    get_device_ids( g ) ;
     get_context_and_queue ( g ) ;
 
     get_program ( g ) ;
@@ -33,13 +32,13 @@ int main(){
 
     cell_profile_struct * cell = malloc ( sizeof ( cell [0] ) ) ;
     read_node ( cell ) ;
-    //print_node_in_cell ( cell ) ;
+    print_nodes_in_cell ( cell ) ;
     read_cell ( cell ) ;
-    //print_node_index_of_cell ( cell ) ;
+    print_cells ( cell ) ;
     cl_cell_mem_init ( cell , g ) ;
 
     
-    setArg_for_kernel_leapfrog_step ( p , g , &t ) ;
+/*    setArg_for_kernel_leapfrog_step ( p , g , &t ) ;
     setArg_for_kernel_is_particle_in_cell ( cell , p , g ) ;
     
     // write data to GPU
@@ -69,18 +68,19 @@ int main(){
     free_kernel_hello_world ( g );
     free_kernel_is_particle_in_cell ( g ) ;
     free_kernel_leapfrog_step ( g );
-    
+*/    
     free_program  ( g );
     free_queue    ( g );
 
-    cl_free_test_particle_mem ( p );
+//    cl_free_test_particle_mem ( p );
 
     free_context  ( g );
     free_device   ( g );
+
     free_platform ( g );
     iffree ( g ) ;
 
-    free_cell_profile ( cell ) ;
+//    free_cell_profile ( cell ) ;
     free_test_particle_mem ( p ) ;
 
     return EXIT_SUCCESS;
