@@ -38,7 +38,7 @@ int main(){
     cl_cell_mem_init ( cell , g ) ;
 
     
-/*    setArg_for_kernel_leapfrog_step ( p , g , &t ) ;
+    setArg_for_kernel_leapfrog_step ( p , g , &t ) ;
     setArg_for_kernel_is_particle_in_cell ( cell , p , g ) ;
     
     // write data to GPU
@@ -51,8 +51,8 @@ int main(){
     host_to_gpu ( cell , g , cell ) ;
 
     run_kernel_is_paticle_in_cell ( g ) ;
-    //run_kernel_leapfrog_step0 ( g ) ;
-    //run_kernel_leapfrog_step1 ( g ) ;
+    run_kernel_leapfrog_step0 ( g ) ;
+    run_kernel_leapfrog_step1 ( g ) ;
 
     // Read data from GPU
     gpu_to_host ( p , g , x ) ;
@@ -68,11 +68,9 @@ int main(){
     free_kernel_hello_world ( g );
     free_kernel_is_particle_in_cell ( g ) ;
     free_kernel_leapfrog_step ( g );
-*/    
+    
     free_program  ( g );
     free_queue    ( g );
-
-//    cl_free_test_particle_mem ( p );
 
     free_context  ( g );
     free_device   ( g );
@@ -80,7 +78,7 @@ int main(){
     free_platform ( g );
     iffree ( g ) ;
 
-//    free_cell_profile ( cell ) ;
+    free_cell_profile ( cell ) ;
     free_test_particle_mem ( p ) ;
 
     return EXIT_SUCCESS;

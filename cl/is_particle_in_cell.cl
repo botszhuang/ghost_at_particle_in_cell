@@ -62,7 +62,7 @@ __kernel void is_particle_in_cell(
 
         y = point_in_triangle ( A , B , C , P ) ;
         if ( y ) { 
-          printf ( "p[%i] is inside cell[%i] ( %d %d %d )\n"  , particleIndex , triangleIndex  ) ; 
+          printf ( "p[%i] is inside cell[%i] ( %d %d %d )\n" , particleIndex , triangleIndex , triangle.x , triangle.y, triangle.z  ) ; 
           cell_index_of_p_Ptr [ particleIndex ] = triangleIndex ;
         }
       }
