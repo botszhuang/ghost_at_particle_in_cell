@@ -35,7 +35,9 @@
 #define triangleStruct_printf(T,i) ddd_printf(T,i)
 #define node_type_printf(N,i) lflf_printf(N,i)
 
+#define cellNeighborType unsigned int
 #define cell_index_type unsigned int
+
 typedef struct { unsigned int x ; unsigned int y ; unsigned int z ; } triangleStruct ;
 
 #endif // c_and_cl_common.h

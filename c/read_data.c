@@ -1,22 +1,18 @@
-#ifndef CELL_READ_NODE_C
-#define CELL_READ_NODE_C
+#ifndef READ_NODE_C
+#define READ_NODE_C
 
 #include <stdio.h>
 #include <cl_erro_code.h>
 #include <c_tool.h>
+#include <c_and_cl_common.h>
 #include <cl_gpu_profile_struct.h>
-#include <read_data.h>
 #include <string.h>
 
-#define fPointFile  "points.csv"
-#define fNodeFile  "nodes.csv"
-#define fCellFile  "triangles.csv"
 
-#define checkCellNode(a) {\
+#define checkRelocate(a) {\
     if (!a) {\
         printf("realloc failed for ##a @ %s %d", __FILE__, __LINE__ );\
         iffree(a);\
-        iffree(c);\
         exit(EXIT_FAILURE);\
     }\
 }
@@ -46,7 +42,7 @@ static inline unsigned int rellocation_func ( void ** p , size_t pSize, const si
     
 }
 
-static inline void read_x_dim_CSV ( const char * filename , x_dim ** lflf_array , unsigned int * lflf_size ) {
+void read_x_dim_CSV ( const char * filename , x_dim ** lflf_array , unsigned int * lflf_size ) {
 
     printf ( "reading %s ...\n", filename ) ;
 
@@ -74,9 +70,10 @@ static inline void read_x_dim_CSV ( const char * filename , x_dim ** lflf_array 
     // update output
     *lflf_size  = counter ;
     *lflf_array = realloc ( List0 , counter * sizeofElement ) ;
+    checkRelocate( lflf_array ) ;
 
 }
-static inline void read_3int_CSV  ( const char * filename , triangleStruct ** int3_array   , unsigned int * int3_size ) {
+void read_3int_CSV  ( const char * filename , triangleStruct ** int3_array   , unsigned int * int3_size ) {
 
     printf ( "reading %s ...\n", filename ) ;
 
@@ -104,30 +101,9 @@ static inline void read_3int_CSV  ( const char * filename , triangleStruct ** in
     // update output
     *int3_size  = counter ;
     *int3_array = realloc ( List0 , counter * sizeofElement ) ;
+    checkRelocate( int3_array ) ;
 
 }
 
-void read_points ( test_particle_profile_struct * c ) {
-       
-    read_x_dim_CSV ( fPointFile , &( c->x ) , &( c->number ) ) ;
-    checkCellNode(c->x) ;
-
-}
-void read_node ( cell_profile_struct * c ) {
-
-    read_x_dim_CSV ( fNodeFile , &( c->node ) , &( c->nodeSize ) ) ;
-    checkCellNode(c->node) ;
-
-}
-void read_cell ( cell_profile_struct * c ) {
-
-    read_3int_CSV ( fCellFile , (triangleStruct **)&( c->cell ) , &( c->cellSize ) ) ;
-    //checkCellNode(c->cell);  // Check if reallocation succeeded
-
-}
-
-#undef fNodeFile
-#undef fCellFile
-#undef fPointFile
 
 #endif

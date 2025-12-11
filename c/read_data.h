@@ -4,9 +4,7 @@
 #include <cell_type.h>
 #include <test_particle_type.h>
 
-void read_points ( test_particle_profile_struct * p ) ;
-
-void read_node ( cell_profile_struct * c ) ;
-void read_cell ( cell_profile_struct * c ) ;
+void read_x_dim_CSV ( const char * filename , x_dim ** lflf_array , unsigned int * lflf_size ) ;
+void read_3int_CSV  ( const char * filename , triangleStruct ** int3_array   , unsigned int * int3_size ) ;
 
 #endif

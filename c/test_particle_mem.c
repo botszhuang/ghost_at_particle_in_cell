@@ -6,6 +6,13 @@
 #include <cl_gpu_profile_struct.h>
 #include <cl_gpu_tool.h>
 
+#define fPointFile  "points.csv"
+void read_points ( test_particle_profile_struct * c ) {
+       
+    read_x_dim_CSV ( fPointFile , &( c->x ) , &( c->number ) ) ;
+}
+#undef fPointFile
+
 void init_test_particle_mem ( test_particle_profile_struct ** pPtr ){
 
     * pPtr = calloc ( 1 , sizeof ( * pPtr[0] ) ) ;

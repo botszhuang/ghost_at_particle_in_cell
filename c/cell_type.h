@@ -8,6 +8,7 @@ typedef struct{
   
   unsigned int    cellSize ;  
   triangleStruct * cell  ;
+  cellNeighborType * cellNeighbors ;
 
   unsigned int nodeSize ;
   node_type * node ;
