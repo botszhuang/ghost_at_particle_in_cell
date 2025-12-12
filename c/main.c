@@ -36,6 +36,7 @@ int main(){
     read_cell ( cell ) ;
     print_cells ( cell ) ;
     cl_cell_mem_init ( cell , g ) ;
+    cell_look_for_neighbor ( cell ) ;
 
     
     setArg_for_kernel_leapfrog_step ( p , g , &t ) ;

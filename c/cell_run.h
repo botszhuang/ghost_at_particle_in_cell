@@ -9,4 +9,7 @@ void read_node ( cell_profile_struct * c ) ;
 void read_cell ( cell_profile_struct * c ) ;
 void cl_cell_mem_init  ( cell_profile_struct * c , cl_gpu_profile_struct * g ) ;
 void free_cell_profile ( cell_profile_struct * c ) ;
+
+void cell_look_for_neighbor ( cell_profile_struct * c ) ;
+
 #endif
